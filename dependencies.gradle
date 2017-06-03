@@ -11,9 +11,15 @@ ext{
     //Libraries
     rxJavaVersion = "2.0.4"
     rxAndroidVersion = "2.0.1"
+    lombokVersion = "1.16.6"
+    retrofitVersion = "2.1.0"
+    retrofitRxAdapterVersion = "2.2.0"
+    javaxAnnotationVersion = "1.2"
 
     commonDependencies = [
             rxjava:                  "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
+            lombok:                  "org.projectlombok:lombok:${lombokVersion}",
+            javaxannotation:         "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}",
     ]
 
     commonTestDependencies = [
@@ -30,6 +36,9 @@ ext{
 
     dataDependencies = [
             rxandroid:               "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
+            retrofit:               "com.squareup.retrofit2:retrofit:${retrofitVersion}",
+            retrofitgson:           "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
+            retrofitrxadapter:      "com.squareup.retrofit2:adapter-rxjava2:${retrofitRxAdapterVersion}",
     ]
 
 }
