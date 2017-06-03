@@ -1,0 +1,31 @@
+ext{
+    //Android
+    androidCompileSdkVersion = 25
+    androidBuildToolsVersion = "25.0.3"
+    androidApplicationId = 'br.com.stone.store'
+    androidMinSdkVersion = 15
+    androidTargetSdkVersion = 25
+    androidVersionCode = 1
+    androidVersionName = "1.0"
+
+    commonDependencies = [
+
+    ]
+
+    commonTestDependencies = [
+
+    ]
+
+    presentationDependencies = [
+
+    ]
+
+    domainDependencies = [
+
+    ]
+
+    dataDependencies = [
+
+    ]
+
+}
