@@ -8,8 +8,11 @@ ext{
     androidVersionCode = 1
     androidVersionName = "1.0"
 
-    commonDependencies = [
+    //Libraries
+    rxJavaVersion = "2.0.4"
 
+    commonDependencies = [
+            rxjava:                  "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
     ]
 
     commonTestDependencies = [
