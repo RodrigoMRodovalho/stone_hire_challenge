@@ -11,12 +11,16 @@ import io.reactivex.Observable;
  * Created by rrodovalho on 03/06/17.
  */
 
-public interface StoreRepository {
+public interface StoreRepository{
 
-    Observable<List<ProductItem>> getStoreProducts();
+    interface Repo extends Remote,Local{}
 
-    Observable<Void> confirmCheckout(StoreCheckout storeCheckout);
+    interface Remote{
+        Observable<List<ProductItem>> getStoreProducts();
+        Observable<Void> confirmCheckout(StoreCheckout storeCheckout);
+    }
 
-    Observable<List<Transaction>> getFinalizedTransactions();
-
+    interface Local{
+        Observable<List<Transaction>> getFinalizedTransactions();
+    }
 }
