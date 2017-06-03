@@ -10,6 +10,7 @@ ext{
 
     //Libraries
     rxJavaVersion = "2.0.4"
+    rxAndroidVersion = "2.0.1"
 
     commonDependencies = [
             rxjava:                  "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
@@ -28,7 +29,7 @@ ext{
     ]
 
     dataDependencies = [
-
+            rxandroid:               "io.reactivex.rxjava2:rxandroid:${rxAndroidVersion}",
     ]
 
 }
