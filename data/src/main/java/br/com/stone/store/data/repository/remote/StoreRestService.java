@@ -17,6 +17,8 @@ import retrofit2.http.Url;
 
 public interface StoreRestService {
 
+    String BASE_URL = "http://myurl.com";
+
     @GET
     Observable<List<StoreItem>> getStoreItems(@Url String storeItensUrl);
 

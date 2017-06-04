@@ -30,4 +30,6 @@ dependencies {
     compile rootProject.ext.commonDependencies.javaxannotation
     provided rootProject.ext.commonDependencies.lombok
     annotationProcessor rootProject.ext.commonDependencies.lombok
+    compile rootProject.ext.commonDependencies.dagger
+    annotationProcessor rootProject.ext.commonDependencies.daggercompiler
 }

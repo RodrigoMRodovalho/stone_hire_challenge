@@ -15,11 +15,14 @@ ext{
     retrofitVersion = "2.1.0"
     retrofitRxAdapterVersion = "2.2.0"
     javaxAnnotationVersion = "1.2"
+    daggerVersion = "2.9"
 
     commonDependencies = [
             rxjava:                  "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
             lombok:                  "org.projectlombok:lombok:${lombokVersion}",
             javaxannotation:         "javax.annotation:javax.annotation-api:${javaxAnnotationVersion}",
+            dagger:                  "com.google.dagger:dagger:${daggerVersion}",
+            daggercompiler:          "com.google.dagger:dagger-compiler:${daggerVersion}",
     ]
 
     commonTestDependencies = [

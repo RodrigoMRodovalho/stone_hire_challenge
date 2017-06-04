@@ -17,6 +17,9 @@ dependencies {
     compile rootProject.ext.commonDependencies.rxjava
     compileOnly rootProject.ext.commonDependencies.lombok
     apt rootProject.ext.commonDependencies.lombok
+    compile rootProject.ext.commonDependencies.dagger
+    compile rootProject.ext.commonDependencies.javaxannotation
+    apt rootProject.ext.commonDependencies.daggercompiler
 }
 
 sourceCompatibility = "1.7"
