@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">StoneStore</string>
+    <string name="error_title_message">Opss...</string>
+    <string name="retry_connection">Tentar novamente</string>
 </resources>

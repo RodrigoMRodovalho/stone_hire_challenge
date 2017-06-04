@@ -16,6 +16,11 @@ ext{
     retrofitRxAdapterVersion = "2.2.0"
     javaxAnnotationVersion = "1.2"
     daggerVersion = "2.9"
+    androidSupportVersion = "25.3.1"
+    butterKnifeVersion = "8.5.1"
+
+    //Tests
+    junitVersion = "4.12"
 
     commonDependencies = [
             rxjava:                  "io.reactivex.rxjava2:rxjava:${rxJavaVersion}",
@@ -26,11 +31,16 @@ ext{
     ]
 
     commonTestDependencies = [
-
+            junit:                  "junit:junit:${junitVersion}",
     ]
 
     presentationDependencies = [
-
+            appcompat:              "com.android.support:appcompat-v7:${androidSupportVersion}",
+            design:                 "com.android.support:design:${androidSupportVersion}",
+            recyclerview:           "com.android.support:recyclerview-v7:${androidSupportVersion}",
+            cardview:               "com.android.support:cardview-v7:${androidSupportVersion}",
+            butterknife:            "com.jakewharton:butterknife:${butterKnifeVersion}",
+            butterknifecompiler:    "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
     ]
 
     domainDependencies = [

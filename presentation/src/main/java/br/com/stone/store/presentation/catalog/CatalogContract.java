@@ -27,4 +27,8 @@ public interface CatalogContract {
         void goToBaskerScreen(List<ProductItem> selectedItems);
         void goToTransactionHistoryScreen();
     }
+
+    interface OnProductSelectionListener{
+        void onProductSelected(int position);
+    }
 }

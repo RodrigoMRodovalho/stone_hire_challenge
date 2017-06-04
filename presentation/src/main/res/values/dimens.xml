@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cover_image_height">200dp</dimen>
+    <dimen name="collap_toolbar_title_margin_end">64dp</dimen>
+    <dimen name="collap_toolbar_title_margin_start">48dp</dimen>
+    <dimen name="error_image_height">100dp</dimen>
+    <dimen name="error_image_width">100dp</dimen>
+</resources>
