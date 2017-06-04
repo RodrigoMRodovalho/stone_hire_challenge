@@ -5,6 +5,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import br.com.stone.store.domain.usecase.FetchCatalogUseCase;
 import br.com.stone.store.presentation.catalog.CatalogContract;
 import br.com.stone.store.presentation.catalog.CatalogPresenter;
 import br.com.stone.store.presentation.catalog.adapter.GridSpacingItemDecoration;
@@ -28,8 +29,10 @@ public class CatalogModule {
 
     @PerView
     @Provides
-    CatalogContract.Presenter providesPresenter(){
-        return new CatalogPresenter();
+    CatalogContract.Presenter providesPresenter(FetchCatalogUseCase useCase){
+        CatalogContract.Presenter presenter = new CatalogPresenter(useCase);
+        presenter.attachView(view);
+        return presenter;
     }
 
     @PerView

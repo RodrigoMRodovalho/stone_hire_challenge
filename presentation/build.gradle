@@ -36,6 +36,8 @@ dependencies {
     compile rootProject.ext.presentationDependencies.butterknife
     annotationProcessor rootProject.ext.presentationDependencies.butterknifecompiler
     compile rootProject.ext.presentationDependencies.picasso
+    compile rootProject.ext.presentationDependencies.actionitembadge
+    compile rootProject.ext.presentationDependencies.iconicscore
 
     testCompile rootProject.ext.commonTestDependencies.junit
 }

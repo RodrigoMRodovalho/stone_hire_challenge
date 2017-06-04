@@ -19,6 +19,8 @@ ext{
     androidSupportVersion = "25.3.1"
     butterKnifeVersion = "8.5.1"
     picassoVersion = "2.5.2"
+    actionItemBadgeVersion = "3.3.1@aar"
+    iconicsCoreVersion = "2.8.1@aar"
 
     //Tests
     junitVersion = "4.12"
@@ -43,6 +45,8 @@ ext{
             butterknife:            "com.jakewharton:butterknife:${butterKnifeVersion}",
             butterknifecompiler:    "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
             picasso:                "com.squareup.picasso:picasso:${picassoVersion}",
+            actionitembadge:        "com.mikepenz:actionitembadge:${actionItemBadgeVersion}",
+            iconicscore:        "com.mikepenz:iconics-core:${iconicsCoreVersion}",
     ]
 
     domainDependencies = [

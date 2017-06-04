@@ -17,14 +17,15 @@ public interface CatalogContract {
         void hideLoading();
         void showCatalog(List<ProductItem> catalog);
         void showError(String errorMessage);
-        void showBasketScreen();
+        void showBasketScreen(List<ProductItem> selectedItems);
         void showTransactionHistoryScreen();
+        void updateCartItemCounter(int counter);
     }
 
     interface Presenter extends MvpPresenter<View>{
         void fetchCatalog();
         void addToCart(ProductItem productItem);
-        void goToBaskerScreen(List<ProductItem> selectedItems);
+        void goToBaskerScreen();
         void goToTransactionHistoryScreen();
     }
 

@@ -1,14 +1,19 @@
 package br.com.stone.store.presentation.catalog;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.mikepenz.actionitembadge.library.ActionItemBadge;
 
 import java.util.List;
 
@@ -57,6 +62,7 @@ public class CatalogActivity extends BaseActivity
 
     private List<ProductItem> productItemList;
     private CatalogRecyclerViewAdapter catalogAdapter;
+    private MenuItem shoppingCartMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,42 @@ public class CatalogActivity extends BaseActivity
         catalogRecyclerView.setLayoutManager(catalogRecyclerViewLayoutManager);
         catalogRecyclerView.addItemDecoration(catalogRecyclerViewItemDecotation);
         catalogRecyclerView.setItemAnimator(catalogRecyclerViewItemAnimator);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.catalog_menu, menu);
+
+        shoppingCartMenuItem = menu.findItem(R.id.menu_shopping_cart);
+
+        Drawable shoppingCartMenuIconDrawable;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            shoppingCartMenuIconDrawable = getDrawable(R.drawable.ic_action_shopping_cart);
+        }
+        else{
+            shoppingCartMenuIconDrawable = getResources().getDrawable(R.drawable.ic_action_shopping_cart);
+        }
+
+        ActionItemBadge.update(
+                this,
+                shoppingCartMenuItem,
+                shoppingCartMenuIconDrawable,
+                ActionItemBadge.BadgeStyles.RED,
+                0);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.menu_transaction_history) presenter.goToTransactionHistoryScreen();
+        else presenter.goToBaskerScreen();
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void initCollapsingToolbar() {
@@ -106,7 +148,7 @@ public class CatalogActivity extends BaseActivity
 
     @OnClick(R.id.retryButton)
     public void retryGetCatalog(){
-
+        presenter.fetchCatalog();
     }
 
     @Override
@@ -142,7 +184,7 @@ public class CatalogActivity extends BaseActivity
     }
 
     @Override
-    public void showBasketScreen() {
+    public void showBasketScreen(List<ProductItem> selectedItems) {
 
     }
 
@@ -151,9 +193,20 @@ public class CatalogActivity extends BaseActivity
 
     }
 
+    @Override
+    public void updateCartItemCounter(int counter) {
+        ActionItemBadge.update(shoppingCartMenuItem, counter);
+    }
+
 
     @Override
     public void onProductSelected(int position) {
+        presenter.addToCart(productItemList.get(position));
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.fetchCatalog();
     }
 }

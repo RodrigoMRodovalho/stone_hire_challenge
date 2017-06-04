@@ -4,6 +4,7 @@ import android.app.Application;
 
 import br.com.stone.store.data.di.modules.NetworkModule;
 import br.com.stone.store.data.di.modules.RepositoryModule;
+import br.com.stone.store.domain.di.UseCaseModule;
 import br.com.stone.store.presentation.di.components.ApplicationComponent;
 import br.com.stone.store.presentation.di.components.DaggerApplicationComponent;
 import br.com.stone.store.presentation.di.modules.AndroidModule;
@@ -28,6 +29,7 @@ public class StoreApplication extends Application {
                 .androidModule(new AndroidModule(this))
                 .repositoryModule(new RepositoryModule())
                 .networkModule(new NetworkModule())
+                .useCaseModule(new UseCaseModule())
                 .build();
     }
 

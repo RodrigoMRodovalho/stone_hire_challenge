@@ -1,7 +1,8 @@
 package br.com.stone.store.presentation.catalog;
 
-import java.util.List;
+import javax.inject.Inject;
 
+import br.com.stone.store.domain.base.UseCase;
 import br.com.stone.store.domain.model.ProductItem;
 import br.com.stone.store.presentation.base.BasePresenter;
 
@@ -11,6 +12,13 @@ import br.com.stone.store.presentation.base.BasePresenter;
 
 public class CatalogPresenter extends BasePresenter<CatalogContract.View>
         implements CatalogContract.Presenter {
+
+    @Inject
+    UseCase fetchCatalogUseCase;
+
+    public CatalogPresenter(UseCase fetchCatalogUseCase) {
+        this.fetchCatalogUseCase = fetchCatalogUseCase;
+    }
 
     @Override
     public void fetchCatalog() {
@@ -23,7 +31,7 @@ public class CatalogPresenter extends BasePresenter<CatalogContract.View>
     }
 
     @Override
-    public void goToBaskerScreen(List<ProductItem> selectedItems) {
+    public void goToBaskerScreen() {
 
     }
 
