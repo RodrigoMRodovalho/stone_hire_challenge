@@ -29,7 +29,7 @@ import butterknife.OnClick;
 public class CatalogActivity extends BaseActivity
         implements CatalogContract.View,CatalogContract.OnProductSelectionListener {
 
-    @BindView(R.id.catalogRecyclerView)
+    @BindView(R.id.catalog_recyclerview)
     RecyclerView catalogRecyclerView;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -37,11 +37,11 @@ public class CatalogActivity extends BaseActivity
     CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.appbar)
     AppBarLayout appBarLayout;
-    @BindView(R.id.loadingFrameLayout)
+    @BindView(R.id.loading_framelayout)
     FrameLayout loadingFrameLayout;
-    @BindView(R.id.errorRelativeLayout)
+    @BindView(R.id.error_relativelayout)
     RelativeLayout errorRelativeLayout;
-    @BindView(R.id.errorDescriptionTextView)
+    @BindView(R.id.error_description_textview)
     TextView errorDescriptionTextView;
 
 
@@ -127,8 +127,8 @@ public class CatalogActivity extends BaseActivity
         catalogRecyclerView.setVisibility(View.VISIBLE);
         productItemList = catalog;
         catalogAdapter = new CatalogRecyclerViewAdapter(
-                                        this,
-                                        getApplicationContext(),
+                                        CatalogActivity.this,
+                                        CatalogActivity.this,
                                         productItemList);
 
         catalogRecyclerView.setAdapter(catalogAdapter);

@@ -12,7 +12,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/loadingFrameLayout"
+        android:id="@+id/loading_framelayout"
         android:visibility="visible"
         >
 
@@ -22,7 +22,7 @@
             style="@style/Base.Widget.AppCompat.ProgressBar"
             android:indeterminate="true"
             android:layout_gravity="center"
-            android:id="@+id/loadingProgressBar"
+            android:id="@+id/loading_progress_bar"
             />
 
     </FrameLayout>
@@ -30,7 +30,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/errorRelativeLayout"
+        android:id="@+id/error_relativelayout"
         android:visibility="gone"
         android:layout_gravity="center"
         >
@@ -38,10 +38,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/errorTextView"
+            android:id="@+id/error_textview"
             android:text="@string/error_title_message"
+            android:textColor="@android:color/white"
             android:layout_centerInParent="true"
-            android:layout_above="@+id/errorImageView"
+            android:layout_above="@+id/error_imageview"
+            android:textSize="15sp"
             />
 
         <ImageView
@@ -49,33 +51,34 @@
             android:layout_height="@dimen/error_image_height"
             android:layout_centerInParent="true"
             android:background="@drawable/yodasad"
-            android:id="@+id/errorImageView"
+            android:id="@+id/error_imageview"
             />
-
-
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_below="@+id/errorImageView"
+            android:layout_below="@+id/error_imageview"
             android:text="Dynamic Text - Error Description"
+            android:textColor="@android:color/white"
             android:layout_centerInParent="true"
-            android:id="@+id/errorDescriptionTextView"
+            android:id="@+id/error_description_textview"
+            android:layout_marginBottom="5dp"
             />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/retryButton"
-            android:layout_below="@id/errorDescriptionTextView"
+            android:layout_below="@id/error_description_textview"
+            android:layout_centerHorizontal="true"
             android:text="@string/retry_connection"
             />
 
     </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/catalogRecyclerView"
+        android:id="@+id/catalog_recyclerview"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

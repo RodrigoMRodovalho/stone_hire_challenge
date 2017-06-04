@@ -35,6 +35,7 @@ dependencies {
     compile rootProject.ext.presentationDependencies.cardview
     compile rootProject.ext.presentationDependencies.butterknife
     annotationProcessor rootProject.ext.presentationDependencies.butterknifecompiler
+    compile rootProject.ext.presentationDependencies.picasso
 
     testCompile rootProject.ext.commonTestDependencies.junit
 }

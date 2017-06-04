@@ -2,4 +2,7 @@
     <string name="app_name">StoneStore</string>
     <string name="error_title_message">Opss...</string>
     <string name="retry_connection">Tentar novamente</string>
+    <string name="price_indicator">Preço: </string>
+    <string name="seller_indicator">Vendidor por:</string>
+    <string name="product_card_add_to_cart">Adicionar</string>
 </resources>

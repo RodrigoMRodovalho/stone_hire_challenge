@@ -3,6 +3,16 @@
     <dimen name="cover_image_height">200dp</dimen>
     <dimen name="collap_toolbar_title_margin_end">64dp</dimen>
     <dimen name="collap_toolbar_title_margin_start">48dp</dimen>
-    <dimen name="error_image_height">100dp</dimen>
-    <dimen name="error_image_width">100dp</dimen>
+    <dimen name="error_image_height">150dp</dimen>
+    <dimen name="error_image_width">150dp</dimen>
+    <dimen name="catalog_card_elevation">4dp</dimen>
+    <dimen name="catalog_card_margin">4dp</dimen>
+    <dimen name="catalog_card_radius">0dp</dimen>
+    <dimen name="thumbnail_product_height">130dp</dimen>
+    <dimen name="thumbnail_product_margin">2dp</dimen>
+    <dimen name="product_info_padding">10dp</dimen>
+    <dimen name="product_title_textsize">18sp</dimen>
+    <dimen name="product_info_textsize">12sp</dimen>
+    <dimen name="product_price_padding_bottom">5dp</dimen>
+    <dimen name="product_price_indicator_padding">2dp</dimen>
 </resources>
