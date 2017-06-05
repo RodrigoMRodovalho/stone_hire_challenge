@@ -98,7 +98,7 @@ public class CatalogActivity extends BaseActivity
                 shoppingCartMenuItem,
                 shoppingCartMenuIconDrawable,
                 ActionItemBadge.BadgeStyles.RED,
-                0);
+                presenter.getBasketSize());
 
         return super.onCreateOptionsMenu(menu);
     }

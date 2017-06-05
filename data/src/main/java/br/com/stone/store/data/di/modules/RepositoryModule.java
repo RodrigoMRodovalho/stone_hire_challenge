@@ -2,6 +2,7 @@ package br.com.stone.store.data.di.modules;
 
 import javax.inject.Singleton;
 
+import br.com.stone.store.data.model.ModelMapper;
 import br.com.stone.store.data.repository.RepositoryImpl;
 import br.com.stone.store.data.repository.local.LocalDataSource;
 import br.com.stone.store.data.repository.remote.RemoteDataSource;
@@ -19,8 +20,16 @@ public class RepositoryModule {
 
     @Provides
     @Singleton
-    public StoreRepository.Remote providesRemoteRepository(StoreRestService storeRestService){
-        return new RemoteDataSource(storeRestService);
+    ModelMapper providesModelMapper(){
+        return new ModelMapper();
+    }
+
+    @Provides
+    @Singleton
+    public StoreRepository.Remote providesRemoteRepository(
+            StoreRestService storeRestService,
+            ModelMapper modelMapper){
+        return new RemoteDataSource(storeRestService,modelMapper);
     }
 
     @Provides

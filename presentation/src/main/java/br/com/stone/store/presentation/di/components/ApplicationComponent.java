@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 import br.com.stone.store.data.di.modules.NetworkModule;
 import br.com.stone.store.data.di.modules.RepositoryModule;
 import br.com.stone.store.data.repository.remote.StoreRestService;
+import br.com.stone.store.domain.basket.IBasketManager;
 import br.com.stone.store.domain.di.UseCaseModule;
 import br.com.stone.store.domain.repository.StoreRepository;
 import br.com.stone.store.domain.usecase.FetchCatalogUseCase;
@@ -24,4 +25,5 @@ public interface ApplicationComponent {
     StoreRestService getRestService();
     StoreRepository.Repo getRepository();
     FetchCatalogUseCase getFetchCatalogUseCase();
+    IBasketManager getBasketManager();
 }

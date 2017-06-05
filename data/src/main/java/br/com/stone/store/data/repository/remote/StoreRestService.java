@@ -18,12 +18,15 @@ import retrofit2.http.Url;
 public interface StoreRestService {
 
     String BASE_URL = "http://myurl.com";
+    String STORE_PRODUCTS_URL =
+            "https://raw.githubusercontent.com/stone-pagamentos/desafio-mobile/master/products.json";
 
     @GET
     Observable<List<StoreItem>> getStoreItems(@Url String storeItensUrl);
 
     @POST
-    Observable<Response<Void>> finishCheckout(@Url String storeCheckoutUrl, @Body CheckoutModel checkoutModel);
+    Observable<Response<Void>> finishCheckout(@Url String storeCheckoutUrl,
+                                              @Body CheckoutModel checkoutModel);
 
 
 }

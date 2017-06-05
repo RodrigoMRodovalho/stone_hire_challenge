@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.stone.store.data.model.ModelMapper;
 import br.com.stone.store.domain.model.ProductItem;
 import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.domain.repository.StoreRepository;
@@ -17,14 +18,21 @@ public class RemoteDataSource implements StoreRepository.Remote{
 
     @Inject
     StoreRestService storeRestService;
+    @Inject
+    ModelMapper modelMapper;
 
-    public RemoteDataSource(StoreRestService storeRestService) {
+    public RemoteDataSource(StoreRestService storeRestService, ModelMapper modelMapper) {
         this.storeRestService = storeRestService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     public Observable<List<ProductItem>> getStoreProducts() {
-        return null;
+        return storeRestService.getStoreItems(StoreRestService.STORE_PRODUCTS_URL)
+                .flatMapIterable(storeItems -> storeItems)
+                .map(modelMapper::transformProductModel)
+                .toList()
+                .toObservable();
     }
 
     @Override
