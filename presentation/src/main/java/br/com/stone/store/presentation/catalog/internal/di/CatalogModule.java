@@ -5,7 +5,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import br.com.stone.store.domain.basket.IBasketManager;
+import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import br.com.stone.store.domain.usecase.FetchCatalogUseCase;
 import br.com.stone.store.presentation.catalog.CatalogContract;
 import br.com.stone.store.presentation.catalog.CatalogPresenter;
@@ -32,9 +32,9 @@ public class CatalogModule {
     @Provides
     CatalogContract.Presenter providesPresenter(
             FetchCatalogUseCase useCase,
-            IBasketManager basketManager){
+            IShoppingCartManager shoppingCartManager){
 
-        CatalogContract.Presenter presenter = new CatalogPresenter(useCase,basketManager);
+        CatalogContract.Presenter presenter = new CatalogPresenter(useCase,shoppingCartManager);
         presenter.attachView(view);
         return presenter;
     }

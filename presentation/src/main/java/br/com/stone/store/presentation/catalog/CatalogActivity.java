@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.mikepenz.actionitembadge.library.ActionItemBadge;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -184,7 +185,7 @@ public class CatalogActivity extends BaseActivity
     }
 
     @Override
-    public void showBasketScreen(List<ProductItem> selectedItems) {
+    public void showBasketScreen(Map<ProductItem,Integer> selectedItems) {
 
     }
 

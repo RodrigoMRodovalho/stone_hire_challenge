@@ -1,7 +1,9 @@
 package br.com.stone.store.domain.di;
 
-import br.com.stone.store.domain.basket.BasketManager;
-import br.com.stone.store.domain.basket.IBasketManager;
+import javax.inject.Singleton;
+
+import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
+import br.com.stone.store.domain.shoppingcart.ShoppingCartManager;
 import br.com.stone.store.domain.repository.StoreRepository;
 import br.com.stone.store.domain.usecase.FetchCatalogUseCase;
 import dagger.Module;
@@ -20,8 +22,9 @@ public class UseCaseModule {
     }
 
     @Provides
-    IBasketManager providesBasketManager(){
-        return new BasketManager();
+    @Singleton
+    IShoppingCartManager providesShoppingCartManager(){
+        return new ShoppingCartManager();
     }
 
 }

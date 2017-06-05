@@ -1,6 +1,6 @@
-package br.com.stone.store.domain.basket;
+package br.com.stone.store.domain.shoppingcart;
 
-import java.util.List;
+import java.util.Map;
 
 import br.com.stone.store.domain.model.ProductItem;
 
@@ -8,13 +8,13 @@ import br.com.stone.store.domain.model.ProductItem;
  * Created by rrodovalho on 04/06/17.
  */
 
-public interface IBasketManager {
+public interface IShoppingCartManager {
 
     void addProductItem(ProductItem productItem);
     void removeProductItem(ProductItem productItem);
-    List<ProductItem> getBasket();
+    Map<ProductItem,Integer> getShoppingCart();
     void plusQuantity(ProductItem productItem,int quantity);
     void minusQuantity(ProductItem productItem, int quantity);
     int getTotalItensCount();
-    void cleanBasket();
+    void cleanCart();
 }

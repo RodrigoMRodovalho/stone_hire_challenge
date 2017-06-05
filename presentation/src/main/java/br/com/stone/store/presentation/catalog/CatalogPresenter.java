@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import br.com.stone.store.data.executor.UseCaseHandler;
 import br.com.stone.store.domain.base.UseCase;
-import br.com.stone.store.domain.basket.IBasketManager;
+import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import br.com.stone.store.domain.model.ProductItem;
 import br.com.stone.store.presentation.base.BasePresenter;
 
@@ -20,11 +20,11 @@ public class CatalogPresenter extends BasePresenter<CatalogContract.View>
     @Inject
     UseCase fetchCatalogUseCase;
     @Inject
-    IBasketManager basketManager;
+    IShoppingCartManager shoppingCartManager;
 
-    public CatalogPresenter(UseCase fetchCatalogUseCase, IBasketManager basketManager) {
+    public CatalogPresenter(UseCase fetchCatalogUseCase, IShoppingCartManager shoppingCartManager) {
         this.fetchCatalogUseCase = fetchCatalogUseCase;
-        this.basketManager = basketManager;
+        this.shoppingCartManager = shoppingCartManager;
     }
 
     @Override
@@ -47,13 +47,13 @@ public class CatalogPresenter extends BasePresenter<CatalogContract.View>
 
     @Override
     public void addToCart(ProductItem productItem) {
-        basketManager.addProductItem(productItem);
-        getView().updateCartItemCounter(basketManager.getTotalItensCount());
+        shoppingCartManager.addProductItem(productItem);
+        getView().updateCartItemCounter(shoppingCartManager.getTotalItensCount());
     }
 
     @Override
     public void goToBaskerScreen() {
-        getView().showBasketScreen(basketManager.getBasket());
+        getView().showBasketScreen(shoppingCartManager.getShoppingCart());
     }
 
     @Override
@@ -63,6 +63,6 @@ public class CatalogPresenter extends BasePresenter<CatalogContract.View>
 
     @Override
     public int getBasketSize() {
-        return basketManager.getTotalItensCount();
+        return shoppingCartManager.getTotalItensCount();
     }
 }
