@@ -6,6 +6,7 @@ import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import br.com.stone.store.domain.shoppingcart.ShoppingCartManager;
 import br.com.stone.store.domain.repository.StoreRepository;
 import br.com.stone.store.domain.usecase.FetchCatalogUseCase;
+import br.com.stone.store.domain.usecase.FinishCheckoutUseCase;
 import dagger.Module;
 import dagger.Provides;
 
@@ -25,6 +26,11 @@ public class UseCaseModule {
     @Singleton
     IShoppingCartManager providesShoppingCartManager(){
         return new ShoppingCartManager();
+    }
+
+    @Provides
+    FinishCheckoutUseCase providesFinishCheckoutUseCase(StoreRepository.Repo repository){
+        return new FinishCheckoutUseCase(repository);
     }
 
 }

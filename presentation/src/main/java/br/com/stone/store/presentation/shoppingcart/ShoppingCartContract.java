@@ -3,6 +3,7 @@ package br.com.stone.store.presentation.shoppingcart;
 import java.util.Map;
 
 import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.presentation.base.MvpPresenter;
 import br.com.stone.store.presentation.base.MvpView;
 
@@ -17,6 +18,10 @@ public interface ShoppingCartContract {
         void requestPaymentInformation();
         void showShoppingCart(Map<ProductItem,Integer> shoppingCart);
         void showEmptyCart();
+        void showLoading();
+        void hideLoading();
+        void showPaymentCompleteSuccessfully();
+        void showPaymentFails();
     }
 
     interface Presenter extends MvpPresenter<View>{
@@ -24,7 +29,7 @@ public interface ShoppingCartContract {
         void removeProduct(ProductItem productItem);
         void updateProductQuantity(ProductItem productItem, int quantity);
         void finishCheckout();
-        void sendCheckoutToApproval();
+        void sendCheckoutToApproval(StoreCheckout storeCheckout);
     }
 
     interface OnProductQuantityListener{

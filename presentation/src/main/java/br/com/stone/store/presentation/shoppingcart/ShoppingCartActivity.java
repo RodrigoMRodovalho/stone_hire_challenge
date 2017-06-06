@@ -1,16 +1,24 @@
 package br.com.stone.store.presentation.shoppingcart;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+
+import com.github.pinball83.maskededittext.MaskedEditText;
 
 import java.util.Map;
 
 import javax.inject.Inject;
 
 import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.presentation.R;
 import br.com.stone.store.presentation.application.StoreApplication;
 import br.com.stone.store.presentation.base.BaseActivity;
@@ -63,7 +71,7 @@ public class ShoppingCartActivity extends BaseActivity
 
     @OnClick(R.id.finish_checkout_button)
     public void finishCheckout(){
-
+        presenter.finishCheckout();
     }
 
 
@@ -84,6 +92,71 @@ public class ShoppingCartActivity extends BaseActivity
     @Override
     public void requestPaymentInformation() {
 
+        LayoutInflater li = LayoutInflater.from(this);
+        View paymentInfoView = li.inflate(R.layout.dialog_payment_info, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this );
+
+        alertDialogBuilder.setView(paymentInfoView);
+
+
+        MaskedEditText cardNumberMasketEditText =
+                (MaskedEditText)paymentInfoView.findViewById(R.id.card_number_masked_edittext);
+
+        EditText cardHolderNameEditText = (EditText) paymentInfoView
+                .findViewById(R.id.cardholder_name_edittext);
+
+        MaskedEditText expDateMasketEditText =
+                (MaskedEditText)paymentInfoView.findViewById(R.id.exp_date_card_masked_edittext);
+
+        MaskedEditText cvvMasketEditText =
+                (MaskedEditText)paymentInfoView.findViewById(R.id.cvv_card_masked_edittext);
+
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.confirm_payment),
+                        (dialog, id) -> {
+
+                            if (cardNumberMasketEditText.getUnmaskedText().length() != 16){
+                                cardNumberMasketEditText.setError("Número de Cartão Inválido");
+                            }
+
+                            if (cardHolderNameEditText.getText().toString().length() < 10)
+                                cardHolderNameEditText.setError("Nome inválido");
+
+                            if (expDateMasketEditText.getUnmaskedText().length() != 4){
+                                expDateMasketEditText.setError("Data Inválida");
+                            }
+                            if(cvvMasketEditText.getUnmaskedText().length() != 3){
+                                cvvMasketEditText.setError("CVV Inválido");
+                            }
+
+
+
+
+                            presenter.sendCheckoutToApproval(
+                                    StoreCheckout.builder()
+                                            .cardNumber(cardNumberMasketEditText.getUnmaskedText())
+                                            .cardHolderName(cardHolderNameEditText.getText().toString())
+                                            .expirationDate(expDateMasketEditText.getUnmaskedText())
+                                            .cvv(cvvMasketEditText.getUnmaskedText())
+                                            .build()
+                            );
+
+                        })
+                .setNegativeButton(getString(R.string.cancel_payment),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
+
+
     }
 
     @Override
@@ -96,6 +169,26 @@ public class ShoppingCartActivity extends BaseActivity
 
     @Override
     public void showEmptyCart() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showPaymentCompleteSuccessfully() {
+
+    }
+
+    @Override
+    public void showPaymentFails() {
 
     }
 

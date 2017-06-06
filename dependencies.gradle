@@ -22,6 +22,7 @@ ext{
     actionItemBadgeVersion = "3.3.1@aar"
     iconicsCoreVersion = "2.8.1@aar"
     scrollableNumberPickerVersion = "0.2.2"
+    maskedEditTextVersion = "1.0.3"
 
     //Tests
     junitVersion = "4.12"
@@ -56,6 +57,7 @@ ext{
             actionitembadge:        "com.mikepenz:actionitembadge:${actionItemBadgeVersion}",
             iconicscore:            "com.mikepenz:iconics-core:${iconicsCoreVersion}",
             scrollablenumberpicker: "com.michaelmuenzer.android:ScrollableNumberPicker:${scrollableNumberPickerVersion}",
+            maskededittext:         "com.github.pinball83:masked-edittext:${maskedEditTextVersion}",
     ]
 
     domainDependencies = [

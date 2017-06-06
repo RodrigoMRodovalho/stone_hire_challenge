@@ -1,6 +1,7 @@
 package br.com.stone.store.data.model;
 
 import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.StoreCheckout;
 
 /**
  * Created by rrodovalho on 04/06/17.
@@ -18,4 +19,13 @@ public class ModelMapper {
                 .build();
     }
 
+    public CheckoutModel transformCheckoutModel(StoreCheckout storeCheckout) {
+        return CheckoutModel.builder()
+                .cardNumber(storeCheckout.getCardNumber())
+                .cardHolderName(storeCheckout.getCardHolderName())
+                .expirationDate(storeCheckout.getExpirationDate())
+                .cvv(storeCheckout.getCvv())
+                .value(storeCheckout.getValue())
+                .build();
+    }
 }

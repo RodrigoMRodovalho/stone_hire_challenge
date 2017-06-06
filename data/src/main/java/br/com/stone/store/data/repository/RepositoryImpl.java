@@ -37,6 +37,11 @@ public class RepositoryImpl implements StoreRepository.Repo {
     }
 
     @Override
+    public Observable<Void> saveTransaction(StoreCheckout storeCheckout) {
+        return localSource.saveTransaction(storeCheckout);
+    }
+
+    @Override
     public Observable<List<Transaction>> getFinalizedTransactions() {
         return localSource.getFinalizedTransactions();
     }

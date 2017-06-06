@@ -11,9 +11,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import br.com.stone.store.data.executor.UseCaseHandler;
 import br.com.stone.store.domain.base.UseCase;
@@ -102,16 +100,8 @@ public class CatalogPresenterTest {
 
     @Test
     public void goToShoppingCartScreen() throws Exception {
-
-        Map<ProductItem,Integer> cartMap = new HashMap<>();
-
-        when(shoppingCartManager.getShoppingCart()).thenReturn(cartMap);
-
         presenter.goToShoppingCartScreen();
-
-        verify(shoppingCartManager).getShoppingCart();
-        verify(view).showShoppingCartScreen(eq(cartMap));
-
+        verify(view).showShoppingCartScreen();
     }
 
     @Test

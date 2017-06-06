@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/payment_info_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/payment_info_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+
+    <TextView
+        android:id="@+id/cardnumber_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Número do\ncartão"
+        android:layout_below="@id/payment_info_dialog_title"
+        android:layout_marginRight="20dp"
+        />
+
+    <com.github.pinball83.maskededittext.MaskedEditText
+        android:id="@+id/card_number_masked_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:mask="XXXX XXXX XXXX XXXX"
+        app:notMaskedSymbol="X"
+        app:maskIconColor="@color/colorPrimary"
+        android:layout_below="@id/payment_info_dialog_title"
+        android:layout_toRightOf="@+id/cardnumber_textview"
+        />
+
+    <TextView
+        android:id="@+id/cardholder_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome do\nportador"
+        android:layout_below="@id/card_number_masked_edittext"
+        android:layout_marginRight="20dp"
+        />
+
+    <EditText
+        android:id="@+id/cardholder_name_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_number_masked_edittext"
+        android:layout_toRightOf="@+id/cardholder_name_textview"
+        />
+
+    <TextView
+        android:id="@+id/exp_date_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data de\nexpiração"
+        android:layout_below="@id/cardholder_name_edittext"
+        android:layout_marginRight="20dp"
+        />
+
+    <com.github.pinball83.maskededittext.MaskedEditText
+        android:id="@+id/exp_date_card_masked_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:mask="XX/XX"
+        app:notMaskedSymbol="X"
+        app:maskIconColor="@color/colorPrimary"
+        android:layout_below="@id/cardholder_name_edittext"
+        android:layout_toRightOf="@+id/cardholder_name_textview"
+        />
+
+    <TextView
+        android:id="@+id/cvv_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CVV"
+        android:layout_alignBaseline="@+id/cvv_card_masked_edittext"
+        android:layout_alignBottom="@+id/cvv_card_masked_edittext"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
+
+    <com.github.pinball83.maskededittext.MaskedEditText
+        android:id="@+id/cvv_card_masked_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        app:mask="XXX"
+        app:notMaskedSymbol="X"
+        app:maskIconColor="@color/colorPrimary"
+        android:layout_below="@id/exp_date_card_masked_edittext"
+
+        android:layout_alignLeft="@+id/exp_date_card_masked_edittext"
+        android:layout_alignStart="@+id/exp_date_card_masked_edittext" />
+
+
+
+
+</RelativeLayout>

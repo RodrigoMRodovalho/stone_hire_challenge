@@ -7,10 +7,11 @@ import javax.inject.Singleton;
 import br.com.stone.store.data.di.modules.NetworkModule;
 import br.com.stone.store.data.di.modules.RepositoryModule;
 import br.com.stone.store.data.repository.remote.StoreRestService;
-import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import br.com.stone.store.domain.di.UseCaseModule;
 import br.com.stone.store.domain.repository.StoreRepository;
+import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import br.com.stone.store.domain.usecase.FetchCatalogUseCase;
+import br.com.stone.store.domain.usecase.FinishCheckoutUseCase;
 import br.com.stone.store.presentation.di.modules.AndroidModule;
 import dagger.Component;
 
@@ -26,4 +27,5 @@ public interface ApplicationComponent {
     StoreRepository.Repo getRepository();
     FetchCatalogUseCase getFetchCatalogUseCase();
     IShoppingCartManager getShoppingCartManager();
+    FinishCheckoutUseCase getFinishCheckoutUseCase();
 }

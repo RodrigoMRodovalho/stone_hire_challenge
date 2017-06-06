@@ -21,6 +21,8 @@ public interface StoreRestService {
     String STORE_PRODUCTS_URL =
             "https://raw.githubusercontent.com/stone-pagamentos/desafio-mobile/master/products.json";
 
+    String CHECKOUT_URL = "http://private-4e1d3-starwarsecommercestore.apiary-mock.com/checkout";
+
     @GET
     Observable<List<StoreItem>> getStoreItems(@Url String storeItensUrl);
 

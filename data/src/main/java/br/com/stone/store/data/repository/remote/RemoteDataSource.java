@@ -37,6 +37,10 @@ public class RemoteDataSource implements StoreRepository.Remote{
 
     @Override
     public Observable<Void> confirmCheckout(StoreCheckout storeCheckout) {
-        return null;
+        return storeRestService.finishCheckout(
+                StoreRestService.CHECKOUT_URL,
+                modelMapper.transformCheckoutModel(storeCheckout))
+                .flatMap(voidResponse -> Observable.empty());
+
     }
 }

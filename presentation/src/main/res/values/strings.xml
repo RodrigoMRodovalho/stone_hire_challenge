@@ -9,4 +9,8 @@
     <string name="menu_shopping_cart">Carrinho de Compras</string>
     <string name="finish_checkout">Finalizar Compra</string>
     <string name="total_price_label">Valor total :</string>
+    <string name="payment_info_title">Informações de pagamento</string>
+    <string name="cardnumber_edittext_hint">Número do cartão</string>
+    <string name="confirm_payment">Confirmar</string>
+    <string name="cancel_payment">Cancelar</string>
 </resources>
