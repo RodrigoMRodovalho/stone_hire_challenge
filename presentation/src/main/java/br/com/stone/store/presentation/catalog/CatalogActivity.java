@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.mikepenz.actionitembadge.library.ActionItemBadge;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import br.com.stone.store.presentation.base.BaseActivity;
 import br.com.stone.store.presentation.catalog.adapter.CatalogRecyclerViewAdapter;
 import br.com.stone.store.presentation.catalog.internal.di.CatalogModule;
 import br.com.stone.store.presentation.catalog.internal.di.DaggerCatalogComponent;
+import br.com.stone.store.presentation.shoppingcart.ShoppingCartActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -109,7 +111,7 @@ public class CatalogActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_transaction_history) presenter.goToTransactionHistoryScreen();
-        else presenter.goToBaskerScreen();
+        else presenter.goToShoppingCartScreen();
 
         return super.onOptionsItemSelected(item);
     }
@@ -185,8 +187,8 @@ public class CatalogActivity extends BaseActivity
     }
 
     @Override
-    public void showBasketScreen(Map<ProductItem,Integer> selectedItems) {
-
+    public void showShoppingCartScreen(Map<ProductItem,Integer> selectedItems) {
+        ShoppingCartActivity.start(this,new Gson().toJson(selectedItems));
     }
 
     @Override

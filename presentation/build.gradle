@@ -43,6 +43,11 @@ dependencies {
     compile rootProject.ext.presentationDependencies.picasso
     compile rootProject.ext.presentationDependencies.actionitembadge
     compile rootProject.ext.presentationDependencies.iconicscore
+    compile rootProject.ext.presentationDependencies.scrollablenumberpicker
 
     testCompile rootProject.ext.commonTestDependencies.junit
+    testCompile rootProject.ext.commonTestDependencies.mockito
+    testCompile rootProject.ext.commonTestDependencies.hamcrest
+    testCompile rootProject.ext.commonTestDependencies.powermock
+    testCompile rootProject.ext.commonTestDependencies.powermockmockito
 }

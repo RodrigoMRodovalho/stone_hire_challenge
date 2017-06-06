@@ -18,7 +18,7 @@ public interface CatalogContract {
         void hideLoading();
         void showCatalog(List<ProductItem> catalog);
         void showError(String errorMessage);
-        void showBasketScreen(Map<ProductItem,Integer> selectedItems);
+        void showShoppingCartScreen(Map<ProductItem,Integer> selectedItems);
         void showTransactionHistoryScreen();
         void updateCartItemCounter(int counter);
     }
@@ -26,7 +26,7 @@ public interface CatalogContract {
     interface Presenter extends MvpPresenter<View>{
         void fetchCatalog();
         void addToCart(ProductItem productItem);
-        void goToBaskerScreen();
+        void goToShoppingCartScreen();
         void goToTransactionHistoryScreen();
         int getBasketSize();
     }

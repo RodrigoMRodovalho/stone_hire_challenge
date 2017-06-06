@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    >
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/product_imageview"
+        android:background="@drawable/store_cover_photo"
+        android:layout_margin="8dp"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="8dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome"
+            android:id="@+id/product_name_textview"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Preço"
+            android:id="@+id/product_price_textview"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vendedor"
+            android:id="@+id/product_seller_textview"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        >
+
+        <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
+            android:id="@+id/number_picker_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:snp_minValue="1"
+            app:snp_updateInterval="1"
+            app:snp_buttonIconLeft="@drawable/ic_action_history"
+            app:snp_buttonIconRight="@drawable/ic_action_history"
+            app:snp_buttonBackgroundTintSelector="@color/white"
+            app:snp_buttonTouchScaleFactor="0.8"
+            app:snp_orientation="horizontal"
+            app:snp_valueMarginEnd="5dp"
+            app:snp_valueMarginStart="5dp"
+            app:snp_value_text_color="@color/colorPrimaryText"
+            app:snp_value_text_size="16sp"
+            app:snp_value_text_appearance="?android:attr/textAppearanceMedium"
+            app:snp_buttonPaddingBottom="8dp"
+            app:snp_buttonPaddingLeft="8dp"
+            app:snp_buttonPaddingRight="8dp"
+            app:snp_buttonPaddingTop="8dp"
+            android:background="@drawable/number_picker_bg_color"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remover"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

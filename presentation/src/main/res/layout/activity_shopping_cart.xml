@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/shopping_cart_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/total_price_textview"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/total_price_textview"
+        android:text="400"
+        android:layout_above="@+id/finish_checkout_button"
+        android:layout_alignParentRight="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/total_price_label_textview"
+        android:text="@string/total_price_label"
+        android:layout_toLeftOf="@+id/total_price_textview"
+        android:layout_above="@+id/finish_checkout_button"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/finish_checkout_button"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/finish_checkout"
+        android:layout_marginBottom="30dp"
+        />
+
+
+
+
+
+</RelativeLayout>
