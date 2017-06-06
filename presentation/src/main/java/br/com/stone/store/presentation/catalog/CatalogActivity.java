@@ -13,11 +13,9 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.mikepenz.actionitembadge.library.ActionItemBadge;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -29,6 +27,7 @@ import br.com.stone.store.presentation.catalog.adapter.CatalogRecyclerViewAdapte
 import br.com.stone.store.presentation.catalog.internal.di.CatalogModule;
 import br.com.stone.store.presentation.catalog.internal.di.DaggerCatalogComponent;
 import br.com.stone.store.presentation.shoppingcart.ShoppingCartActivity;
+import br.com.stone.store.presentation.transactionhistory.TransactionHistoryActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,7 +60,6 @@ public class CatalogActivity extends BaseActivity
     RecyclerView.ItemDecoration catalogRecyclerViewItemDecotation;
     @Inject
     RecyclerView.ItemAnimator catalogRecyclerViewItemAnimator;
-
 
     private List<ProductItem> productItemList;
     private CatalogRecyclerViewAdapter catalogAdapter;
@@ -187,13 +185,13 @@ public class CatalogActivity extends BaseActivity
     }
 
     @Override
-    public void showShoppingCartScreen(Map<ProductItem,Integer> selectedItems) {
-        ShoppingCartActivity.start(this,new Gson().toJson(selectedItems));
+    public void showShoppingCartScreen() {
+        ShoppingCartActivity.start(this);
     }
 
     @Override
     public void showTransactionHistoryScreen() {
-
+        TransactionHistoryActivity.start(this);
     }
 
     @Override

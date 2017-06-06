@@ -3,33 +3,45 @@ package br.com.stone.store.presentation.shoppingcart;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import br.com.stone.store.domain.model.ProductItem;
 import br.com.stone.store.presentation.R;
+import br.com.stone.store.presentation.application.StoreApplication;
 import br.com.stone.store.presentation.base.BaseActivity;
+import br.com.stone.store.presentation.shoppingcart.adapter.ShoppingCartRecyclerAdapter;
+import br.com.stone.store.presentation.shoppingcart.internal.di.DaggerShoppingCartComponent;
+import br.com.stone.store.presentation.shoppingcart.internal.di.ShoppingCartModule;
+import br.com.stone.store.presentation.util.CurrencyFormatter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class ShoppingCartActivity extends BaseActivity implements ShoppingCartContract.View{
+public class ShoppingCartActivity extends BaseActivity
+        implements ShoppingCartContract.View, ShoppingCartContract.OnProductQuantityListener {
 
     @BindView(R.id.shopping_cart_recyclerview)
     RecyclerView shoppingCartRecyclerView;
     @BindView(R.id.total_price_textview)
     TextView totalPriceTextView;
 
-    public static void start(Context context,String shoppingCartJson) {
+    @Inject
+    ShoppingCartContract.Presenter presenter;
+    @Inject
+    RecyclerView.LayoutManager linearLayoutManager;
+    @Inject
+    RecyclerView.ItemDecoration itemDecoration;
+    private Map<ProductItem, Integer> shoppingCart;
+    private ShoppingCartRecyclerAdapter shoppingCartAdapter;
+
+    public static void start(Context context) {
         Intent starter = new Intent(context, ShoppingCartActivity.class);
-        starter.putExtra("shoppingCart", shoppingCartJson);
         context.startActivity(starter);
     }
 
@@ -39,20 +51,14 @@ public class ShoppingCartActivity extends BaseActivity implements ShoppingCartCo
         setContentView(R.layout.activity_shopping_cart);
         ButterKnife.bind(this);
 
-        shoppingCartRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        shoppingCartRecyclerView.setLayoutManager(linearLayoutManager);
+        shoppingCartRecyclerView.addItemDecoration(itemDecoration);
+    }
 
-        Intent intent = getIntent();
-
-        if (intent != null){
-
-            String shoppingCartJson = intent.getStringExtra("shoppingCart");
-            if (shoppingCartJson != null){
-                Type typeOfHashMap = new TypeToken<Map<String, String>>() { }.getType();
-                Map<String, String> newMap = new Gson().fromJson(shoppingCartJson, typeOfHashMap);
-            }
-
-        }
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        presenter.fetchShoppingCart();
     }
 
     @OnClick(R.id.finish_checkout_button)
@@ -63,16 +69,46 @@ public class ShoppingCartActivity extends BaseActivity implements ShoppingCartCo
 
     @Override
     public void injectDependencies() {
-
+        DaggerShoppingCartComponent.builder()
+                .applicationComponent(((StoreApplication)getApplication()).getApplicationComponent())
+                .shoppingCartModule(new ShoppingCartModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override
     public void updateTotalPrice(String totalPrice) {
-
+        totalPriceTextView.setText(CurrencyFormatter.formatCentavoToReal(totalPrice));
     }
 
     @Override
     public void requestPaymentInformation() {
+
+    }
+
+    @Override
+    public void showShoppingCart(Map<ProductItem, Integer> shoppingCart) {
+
+        this.shoppingCart = shoppingCart;
+        this.shoppingCartAdapter = new ShoppingCartRecyclerAdapter(this,shoppingCart,this);
+        shoppingCartRecyclerView.setAdapter(shoppingCartAdapter);
+    }
+
+    @Override
+    public void showEmptyCart() {
+
+    }
+
+    @Override
+    public void onQuantitySelected(ProductItem productItem, int quantity) {
+        presenter.updateProductQuantity(productItem,quantity);
+    }
+
+    @Override
+    public void onRemovedProduct(ProductItem productItem,int position) {
+        shoppingCart.remove(productItem);
+        shoppingCartAdapter.notifyItemRemoved(position);
+        presenter.removeProduct(productItem);
 
     }
 }

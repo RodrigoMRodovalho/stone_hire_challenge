@@ -1,7 +1,6 @@
 package br.com.stone.store.presentation.catalog;
 
 import java.util.List;
-import java.util.Map;
 
 import br.com.stone.store.domain.model.ProductItem;
 import br.com.stone.store.presentation.base.MvpPresenter;
@@ -18,7 +17,7 @@ public interface CatalogContract {
         void hideLoading();
         void showCatalog(List<ProductItem> catalog);
         void showError(String errorMessage);
-        void showShoppingCartScreen(Map<ProductItem,Integer> selectedItems);
+        void showShoppingCartScreen();
         void showTransactionHistoryScreen();
         void updateCartItemCounter(int counter);
     }

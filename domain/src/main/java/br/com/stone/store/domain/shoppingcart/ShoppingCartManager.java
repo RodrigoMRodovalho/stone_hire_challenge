@@ -12,6 +12,7 @@ import br.com.stone.store.domain.model.ProductItem;
 public class ShoppingCartManager implements IShoppingCartManager {
 
     private Map<ProductItem,Integer> shoppingCartMap;
+    private int totalPrice;
 
     public ShoppingCartManager() {
         shoppingCartMap = new HashMap<>();
@@ -20,18 +21,24 @@ public class ShoppingCartManager implements IShoppingCartManager {
     @Override
     public void addProductItem(ProductItem productItem) {
 
+        int qnt;
+
         if (shoppingCartMap.containsKey(productItem)){
-            shoppingCartMap.put(productItem, shoppingCartMap.get(productItem) + 1);
+            qnt = shoppingCartMap.get(productItem) + 1;
         }
         else{
-            shoppingCartMap.put(productItem, 1);
+            qnt = 1;
         }
+
+        shoppingCartMap.put(productItem, qnt);
+        totalPrice += qnt * Integer.parseInt(productItem.getPrice());
     }
 
     @Override
     public void removeProductItem(ProductItem productItem) {
 
         if (shoppingCartMap.containsKey(productItem)){
+            totalPrice -= shoppingCartMap.get(productItem) * Integer.parseInt(productItem.getPrice());
             shoppingCartMap.remove(productItem);
         }
     }
@@ -41,18 +48,19 @@ public class ShoppingCartManager implements IShoppingCartManager {
     }
 
     @Override
-    public void plusQuantity(ProductItem productItem, int quantity) {
+    public void updateQuantity(ProductItem productItem, int quantity) {
 
         if (shoppingCartMap.containsKey(productItem)){
-            shoppingCartMap.put(productItem, shoppingCartMap.get(productItem) + 1);
-        }
-    }
+            int currentQuantity = shoppingCartMap.get(productItem);
 
-    @Override
-    public void minusQuantity(ProductItem productItem, int quantity) {
+            if (currentQuantity > quantity){
+                totalPrice -= (currentQuantity - quantity) * Integer.parseInt(productItem.getPrice());
+            }
+            else{
+                totalPrice += (quantity - currentQuantity ) * Integer.parseInt(productItem.getPrice());
+            }
 
-        if (shoppingCartMap.containsKey(productItem)){
-            shoppingCartMap.put(productItem, shoppingCartMap.get(productItem) - 1);
+            shoppingCartMap.put(productItem, quantity);
         }
     }
 
@@ -64,5 +72,11 @@ public class ShoppingCartManager implements IShoppingCartManager {
     @Override
     public void cleanCart() {
         shoppingCartMap.clear();
+        totalPrice = 0;
+    }
+
+    @Override
+    public String getTotalPrice() {
+        return String.valueOf(totalPrice);
     }
 }

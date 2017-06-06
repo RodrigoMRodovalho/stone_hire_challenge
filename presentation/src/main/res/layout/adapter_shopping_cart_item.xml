@@ -4,13 +4,13 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
+    android:layout_weight="1"
     >
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/product_imageview"
-        android:background="@drawable/store_cover_photo"
         android:layout_margin="8dp"
         />
 
@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_margin="8dp"
+        android:layout_weight="1"
         >
 
         <TextView
@@ -26,6 +27,8 @@
             android:layout_height="wrap_content"
             android:text="Nome"
             android:id="@+id/product_name_textview"
+            android:textColor="@color/colorPrimaryText"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             />
 
         <TextView
@@ -33,6 +36,8 @@
             android:layout_height="wrap_content"
             android:text="Preço"
             android:id="@+id/product_price_textview"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_marginTop="4dp"
             />
 
         <TextView
@@ -40,6 +45,8 @@
             android:layout_height="wrap_content"
             android:text="Vendedor"
             android:id="@+id/product_seller_textview"
+            android:textColor="@color/colorPrimaryText"
+            android:layout_marginTop="4dp"
             />
     </LinearLayout>
 
@@ -48,19 +55,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+
         >
 
         <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
-            android:id="@+id/number_picker_horizontal"
+            android:id="@+id/product_item_counter_number_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             app:snp_minValue="1"
             app:snp_updateInterval="1"
-            app:snp_buttonIconLeft="@drawable/ic_action_history"
-            app:snp_buttonIconRight="@drawable/ic_action_history"
+            app:snp_buttonIconLeft="@mipmap/minus"
+            app:snp_buttonIconRight="@mipmap/plus"
             app:snp_buttonBackgroundTintSelector="@color/white"
-            app:snp_buttonTouchScaleFactor="0.8"
             app:snp_orientation="horizontal"
             app:snp_valueMarginEnd="5dp"
             app:snp_valueMarginStart="5dp"
@@ -75,9 +82,12 @@
             />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Remover"
+            android:id="@+id/remove_product_button"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:background="@drawable/delete"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
             />
 
     </LinearLayout>

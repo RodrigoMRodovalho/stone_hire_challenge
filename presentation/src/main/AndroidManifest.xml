@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".shoppingcart.ShoppingCartActivity"></activity>
+        <activity android:name=".shoppingcart.ShoppingCartActivity" />
+        <activity android:name=".transactionhistory.TransactionHistoryActivity"></activity>
     </application>
 
 </manifest>

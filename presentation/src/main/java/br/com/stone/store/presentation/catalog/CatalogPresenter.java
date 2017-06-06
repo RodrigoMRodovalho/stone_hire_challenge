@@ -53,7 +53,7 @@ public class CatalogPresenter extends BasePresenter<CatalogContract.View>
 
     @Override
     public void goToShoppingCartScreen() {
-        getView().showShoppingCartScreen(shoppingCartManager.getShoppingCart());
+        getView().showShoppingCartScreen();
     }
 
     @Override

@@ -13,8 +13,8 @@ public interface IShoppingCartManager {
     void addProductItem(ProductItem productItem);
     void removeProductItem(ProductItem productItem);
     Map<ProductItem,Integer> getShoppingCart();
-    void plusQuantity(ProductItem productItem,int quantity);
-    void minusQuantity(ProductItem productItem, int quantity);
+    void updateQuantity(ProductItem productItem,int quantity);
     int getTotalItensCount();
     void cleanCart();
+    String getTotalPrice();
 }
