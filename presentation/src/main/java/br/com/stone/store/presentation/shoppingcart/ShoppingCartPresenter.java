@@ -42,7 +42,7 @@ public class ShoppingCartPresenter extends BasePresenter<ShoppingCartContract.Vi
 
     @Override
     public void removeProduct(Product product) {
-        shoppingCartManager.removeProductItem(product);
+        shoppingCartManager.removeProduct(product);
 
         if (shoppingCartManager.getTotalItensCount() == 0){
             getView().showEmptyCart();

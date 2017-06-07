@@ -11,8 +11,8 @@ import br.com.stone.store.domain.model.ShoppingCartItem;
 
 public interface IShoppingCartManager {
 
-    void addProductItem(Product product);
-    void removeProductItem(Product product);
+    void addProduct(Product product);
+    void removeProduct(Product product);
     List<ShoppingCartItem> getShoppingCart();
     void updateQuantity(Product product, int quantity);
     int getTotalItensCount();

@@ -23,7 +23,7 @@ public class ShoppingCartManager implements IShoppingCartManager {
     }
 
     @Override
-    public void addProductItem(Product product) {
+    public void addProduct(Product product) {
 
         int qnt;
 
@@ -39,7 +39,7 @@ public class ShoppingCartManager implements IShoppingCartManager {
     }
 
     @Override
-    public void removeProductItem(Product product) {
+    public void removeProduct(Product product) {
 
         if (shoppingCartMap.containsKey(product)){
             totalPrice -= shoppingCartMap.get(product) * Integer.parseInt(product.getPrice());

@@ -94,7 +94,7 @@ public class CatalogPresenterTest {
 
         presenter.addToCart(product);
 
-        verify(shoppingCartManager).addProductItem(eq(product));
+        verify(shoppingCartManager).addProduct(eq(product));
         verify(view).updateCartItemCounter(eq(cartSize));
     }
 

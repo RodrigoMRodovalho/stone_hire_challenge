@@ -47,7 +47,7 @@ public class CatalogPresenter extends BasePresenter<CatalogContract.View>
 
     @Override
     public void addToCart(Product product) {
-        shoppingCartManager.addProductItem(product);
+        shoppingCartManager.addProduct(product);
         getView().updateCartItemCounter(shoppingCartManager.getTotalItensCount());
     }
 
