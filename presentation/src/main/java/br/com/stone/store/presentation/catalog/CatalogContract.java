@@ -2,7 +2,7 @@ package br.com.stone.store.presentation.catalog;
 
 import java.util.List;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.presentation.base.MvpPresenter;
 import br.com.stone.store.presentation.base.MvpView;
 
@@ -15,7 +15,7 @@ public interface CatalogContract {
     interface View extends MvpView{
         void showLoading();
         void hideLoading();
-        void showCatalog(List<ProductItem> catalog);
+        void showCatalog(List<Product> catalog);
         void showError(String errorMessage);
         void showShoppingCartScreen();
         void showTransactionHistoryScreen();
@@ -24,7 +24,7 @@ public interface CatalogContract {
 
     interface Presenter extends MvpPresenter<View>{
         void fetchCatalog();
-        void addToCart(ProductItem productItem);
+        void addToCart(Product product);
         void goToShoppingCartScreen();
         void goToTransactionHistoryScreen();
         int getBasketSize();

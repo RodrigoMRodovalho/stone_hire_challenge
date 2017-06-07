@@ -1,8 +1,9 @@
 package br.com.stone.store.domain.shoppingcart;
 
-import java.util.Map;
+import java.util.List;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
+import br.com.stone.store.domain.model.ShoppingCartItem;
 
 /**
  * Created by rrodovalho on 04/06/17.
@@ -10,10 +11,10 @@ import br.com.stone.store.domain.model.ProductItem;
 
 public interface IShoppingCartManager {
 
-    void addProductItem(ProductItem productItem);
-    void removeProductItem(ProductItem productItem);
-    Map<ProductItem,Integer> getShoppingCart();
-    void updateQuantity(ProductItem productItem,int quantity);
+    void addProductItem(Product product);
+    void removeProductItem(Product product);
+    List<ShoppingCartItem> getShoppingCart();
+    void updateQuantity(Product product, int quantity);
     int getTotalItensCount();
     void cleanCart();
     String getTotalPrice();

@@ -2,7 +2,7 @@ package br.com.stone.store.domain.repository;
 
 import java.util.List;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.domain.model.Transaction;
 import io.reactivex.Observable;
@@ -16,8 +16,8 @@ public interface StoreRepository{
     interface Repo extends Remote,Local{}
 
     interface Remote{
-        Observable<List<ProductItem>> getStoreProducts();
-        Observable<Void> confirmCheckout(StoreCheckout storeCheckout);
+        Observable<List<Product>> getStoreProducts();
+        Observable<Boolean> confirmCheckout(StoreCheckout storeCheckout);
     }
 
     interface Local{

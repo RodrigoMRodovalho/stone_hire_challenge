@@ -1,23 +1,29 @@
 package br.com.stone.store.presentation.shoppingcart;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.pinball83.maskededittext.MaskedEditText;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.inject.Inject;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.simplepass.loading_button_lib.customViews.CircularProgressButton;
+import br.com.stone.store.domain.model.Product;
+import br.com.stone.store.domain.model.ShoppingCartItem;
 import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.presentation.R;
 import br.com.stone.store.presentation.application.StoreApplication;
@@ -34,10 +40,22 @@ import butterknife.OnClick;
 public class ShoppingCartActivity extends BaseActivity
         implements ShoppingCartContract.View, ShoppingCartContract.OnProductQuantityListener {
 
+    private static final int CARD_NUMBER_SIZE = 16;
+    private static final int CARDHOLDER_NAME_MIN_SIZE = 10;
+    private static final int EXP_DATE_SIZE = 4;
+    private static final int CVV_SIZE = 3;
     @BindView(R.id.shopping_cart_recyclerview)
     RecyclerView shoppingCartRecyclerView;
     @BindView(R.id.total_price_textview)
     TextView totalPriceTextView;
+    @BindView(R.id.finish_checkout_button)
+    CircularProgressButton finishCheckoutButton;
+
+    @BindView(R.id.cart_relativelayout)
+    RelativeLayout cartRelativeLayout;
+    @BindView(R.id.empty_cart_relativeLayout)
+    RelativeLayout emptyCartRelativeLayout;
+
 
     @Inject
     ShoppingCartContract.Presenter presenter;
@@ -45,8 +63,13 @@ public class ShoppingCartActivity extends BaseActivity
     RecyclerView.LayoutManager linearLayoutManager;
     @Inject
     RecyclerView.ItemDecoration itemDecoration;
-    private Map<ProductItem, Integer> shoppingCart;
+    private List<ShoppingCartItem> shoppingCartItemList;
     private ShoppingCartRecyclerAdapter shoppingCartAdapter;
+
+    private MaskedEditText cardNumberMasketEditText;
+    private EditText cardHolderNameEditText;
+    private MaskedEditText expDateMasketEditText;
+    private MaskedEditText cvvMasketEditText;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, ShoppingCartActivity.class);
@@ -91,117 +114,121 @@ public class ShoppingCartActivity extends BaseActivity
 
     @Override
     public void requestPaymentInformation() {
+        showPaymentDataDialog();
+    }
 
-        LayoutInflater li = LayoutInflater.from(this);
-        View paymentInfoView = li.inflate(R.layout.dialog_payment_info, null);
+    private void showPaymentDataDialog(){
+        View paymentInfoView =
+                LayoutInflater.from(this).inflate(R.layout.dialog_payment_info, null);
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this );
-
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setView(paymentInfoView);
 
+        cardNumberMasketEditText =
+                ButterKnife.findById(paymentInfoView,R.id.card_number_masked_edittext);
+        cardHolderNameEditText =
+                ButterKnife.findById(paymentInfoView,R.id.cardholder_name_edittext);
+        expDateMasketEditText =
+                ButterKnife.findById(paymentInfoView,R.id.exp_date_card_masked_edittext);
+        cvvMasketEditText =
+                ButterKnife.findById(paymentInfoView,R.id.cvv_card_masked_edittext);
 
-        MaskedEditText cardNumberMasketEditText =
-                (MaskedEditText)paymentInfoView.findViewById(R.id.card_number_masked_edittext);
+        AlertDialog alertDialog = alertDialogBuilder
+                                    .setCancelable(false)
+                                    .setPositiveButton(getString(R.string.confirm_payment),null)
+                                    .setNegativeButton(getString(R.string.cancel_payment),
+                                            (dialog, id) -> dialog.cancel())
+                                    .create();
 
-        EditText cardHolderNameEditText = (EditText) paymentInfoView
-                .findViewById(R.id.cardholder_name_edittext);
+        alertDialog.setOnShowListener(dialog -> {
 
-        MaskedEditText expDateMasketEditText =
-                (MaskedEditText)paymentInfoView.findViewById(R.id.exp_date_card_masked_edittext);
+            Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(view -> {
 
-        MaskedEditText cvvMasketEditText =
-                (MaskedEditText)paymentInfoView.findViewById(R.id.cvv_card_masked_edittext);
+                boolean isValidPaymentInfo = true;
 
-        alertDialogBuilder
-                .setCancelable(false)
-                .setPositiveButton(getString(R.string.confirm_payment),
-                        (dialog, id) -> {
+                if (cardNumberMasketEditText.getUnmaskedText().length() != CARD_NUMBER_SIZE){
+                    cardNumberMasketEditText.setError(getString(R.string.invalid_cardnumber));
+                    isValidPaymentInfo = false;
+                }
 
-                            if (cardNumberMasketEditText.getUnmaskedText().length() != 16){
-                                cardNumberMasketEditText.setError("Número de Cartão Inválido");
-                            }
+                if (cardHolderNameEditText.getText().toString().length() < CARDHOLDER_NAME_MIN_SIZE) {
+                    cardHolderNameEditText.setError(getString(R.string.invalid_cardholder_name));
+                    isValidPaymentInfo = false;
+                }
 
-                            if (cardHolderNameEditText.getText().toString().length() < 10)
-                                cardHolderNameEditText.setError("Nome inválido");
+                if (expDateMasketEditText.getUnmaskedText().length() != EXP_DATE_SIZE){
+                    expDateMasketEditText.setError(getString(R.string.invalid_date));
+                    isValidPaymentInfo = false;
+                }
+                if(cvvMasketEditText.getUnmaskedText().length() != CVV_SIZE){
+                    isValidPaymentInfo = false;
+                    cvvMasketEditText.setError(getString(R.string.invalid_cvv));
+                }
 
-                            if (expDateMasketEditText.getUnmaskedText().length() != 4){
-                                expDateMasketEditText.setError("Data Inválida");
-                            }
-                            if(cvvMasketEditText.getUnmaskedText().length() != 3){
-                                cvvMasketEditText.setError("CVV Inválido");
-                            }
+                if (isValidPaymentInfo){
+                    presenter.sendCheckoutToApproval(
+                            StoreCheckout.builder()
+                                    .cardNumber(cardNumberMasketEditText.getUnmaskedText())
+                                    .cardHolderName(cardHolderNameEditText.getText().toString())
+                                    .expirationDate(expDateMasketEditText.getUnmaskedText())
+                                    .cvv(cvvMasketEditText.getUnmaskedText())
+                                    .build());
 
-
-
-
-                            presenter.sendCheckoutToApproval(
-                                    StoreCheckout.builder()
-                                            .cardNumber(cardNumberMasketEditText.getUnmaskedText())
-                                            .cardHolderName(cardHolderNameEditText.getText().toString())
-                                            .expirationDate(expDateMasketEditText.getUnmaskedText())
-                                            .cvv(cvvMasketEditText.getUnmaskedText())
-                                            .build()
-                            );
-
-                        })
-                .setNegativeButton(getString(R.string.cancel_payment),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.dismiss();
+                }
+            });
+        });
 
         alertDialog.show();
-
-
     }
 
     @Override
-    public void showShoppingCart(Map<ProductItem, Integer> shoppingCart) {
+    public void showShoppingCart(List<ShoppingCartItem> shoppingCartItemList) {
 
-        this.shoppingCart = shoppingCart;
-        this.shoppingCartAdapter = new ShoppingCartRecyclerAdapter(this,shoppingCart,this);
+        emptyCartRelativeLayout.setVisibility(View.GONE);
+        cartRelativeLayout.setVisibility(View.VISIBLE);
+
+        this.shoppingCartItemList = shoppingCartItemList;
+        this.shoppingCartAdapter = new ShoppingCartRecyclerAdapter(this,shoppingCartItemList,this);
         shoppingCartRecyclerView.setAdapter(shoppingCartAdapter);
     }
 
     @Override
     public void showEmptyCart() {
-
+        emptyCartRelativeLayout.setVisibility(View.VISIBLE);
+        cartRelativeLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
+        finishCheckoutButton.startAnimation();
     }
 
     @Override
     public void showPaymentCompleteSuccessfully() {
 
+        finishCheckoutButton.doneLoadingAnimation(Color.GREEN,
+                BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_shopping_cart));
     }
 
     @Override
     public void showPaymentFails() {
-
+        Toast.makeText(this,"Algo ocorreu de errado, tente novamente",Toast.LENGTH_SHORT).show();
+        finishCheckoutButton.revertAnimation();
     }
 
     @Override
-    public void onQuantitySelected(ProductItem productItem, int quantity) {
-        presenter.updateProductQuantity(productItem,quantity);
+    public void onQuantitySelected(Product product, int quantity) {
+        presenter.updateProductQuantity(product,quantity);
     }
 
     @Override
-    public void onRemovedProduct(ProductItem productItem,int position) {
-        shoppingCart.remove(productItem);
+    public void onRemovedProduct(Product product, int position) {
+        shoppingCartItemList.remove(product);
         shoppingCartAdapter.notifyItemRemoved(position);
-        presenter.removeProduct(productItem);
+        shoppingCartAdapter.notifyItemRangeChanged(position, shoppingCartItemList.size());
+        presenter.removeProduct(product);
 
     }
 }

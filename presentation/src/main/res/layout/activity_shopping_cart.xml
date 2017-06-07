@@ -1,46 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <RelativeLayout
+        android:id="@+id/empty_cart_relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        >
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/shopping_cart_recyclerview"
+        <ImageView
+            android:id="@+id/empty_cart_imageview"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/emptycart"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_cart"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/empty_cart_imageview"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/cart_relativelayout"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/total_price_textview"
-        />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/total_price_textview"
-        android:text="400"
-        android:layout_above="@+id/finish_checkout_button"
-        android:layout_alignParentRight="true"
-        />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/shopping_cart_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/total_price_textview"
+            />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/total_price_label_textview"
-        android:text="@string/total_price_label"
-        android:layout_toLeftOf="@+id/total_price_textview"
-        android:layout_above="@+id/finish_checkout_button"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_price_textview"
+            android:text="400"
+            android:layout_above="@+id/finish_checkout_button"
+            android:layout_alignParentRight="true"
+            />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/finish_checkout_button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="@string/finish_checkout"
-        android:layout_marginBottom="30dp"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/total_price_label_textview"
+            android:text="@string/total_price_label"
+            android:layout_toLeftOf="@+id/total_price_textview"
+            android:layout_above="@+id/finish_checkout_button"
+            />
 
 
+        <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+            android:id="@+id/finish_checkout_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/finish_checkout"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            app:spinning_bar_width="4dp"
+            app:spinning_bar_color="@color/colorAccent"
+            app:spinning_bar_padding="6dp" />
 
-
+    </RelativeLayout>
 
 </RelativeLayout>

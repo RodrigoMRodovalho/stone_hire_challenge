@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.presentation.R;
 import br.com.stone.store.presentation.catalog.CatalogContract;
 import br.com.stone.store.presentation.util.CurrencyFormatter;
@@ -28,15 +28,15 @@ public class CatalogRecyclerViewAdapter extends RecyclerView.Adapter<CatalogRecy
 
     private CatalogContract.OnProductSelectionListener productSelectionListener;
     private Context context;
-    private List<ProductItem> productItemList;
+    private List<Product> productList;
 
     public CatalogRecyclerViewAdapter(CatalogContract.OnProductSelectionListener productSelectionListener,
                                       Context context,
-                                      List<ProductItem> productItemList) {
+                                      List<Product> productList) {
 
         this.productSelectionListener = productSelectionListener;
         this.context = context;
-        this.productItemList = productItemList;
+        this.productList = productList;
     }
 
     @Override
@@ -49,12 +49,12 @@ public class CatalogRecyclerViewAdapter extends RecyclerView.Adapter<CatalogRecy
 
     @Override
     public void onBindViewHolder(CatalogViewHolder holder, int position) {
-        holder.bind(productItemList.get(position),position,productSelectionListener);
+        holder.bind(productList.get(position),position,productSelectionListener);
     }
 
     @Override
     public int getItemCount() {
-        return productItemList.size();
+        return productList.size();
     }
 
     static class CatalogViewHolder extends RecyclerView.ViewHolder{
@@ -78,16 +78,16 @@ public class CatalogRecyclerViewAdapter extends RecyclerView.Adapter<CatalogRecy
             ButterKnife.bind(this,itemView);
         }
 
-        void bind(ProductItem productItem,
+        void bind(Product product,
                   final int position,
                   final CatalogContract.OnProductSelectionListener productSelectionListener ){
 
-            titleTextView.setText(productItem.getTitle());
-            priceTextView.setText(CurrencyFormatter.formatCentavoToReal(productItem.getPrice()));
-            sellerTextView.setText(productItem.getSeller());
+            titleTextView.setText(product.getTitle());
+            priceTextView.setText(CurrencyFormatter.formatCentavoToReal(product.getPrice()));
+            sellerTextView.setText(product.getSeller());
 
             Picasso.with(context)
-                    .load(productItem.getThumbnailImage())
+                    .load(product.getThumbnailImage())
                     .placeholder(R.drawable.product_loading_image)
                     .error(R.drawable.product_loading_error)
                     .into(thumbnailImageView);

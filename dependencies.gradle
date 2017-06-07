@@ -23,6 +23,7 @@ ext{
     iconicsCoreVersion = "2.8.1@aar"
     scrollableNumberPickerVersion = "0.2.2"
     maskedEditTextVersion = "1.0.3"
+    loadingButtonAndroidVersion = "1.7.2"
 
     //Tests
     junitVersion = "4.12"
@@ -58,6 +59,7 @@ ext{
             iconicscore:            "com.mikepenz:iconics-core:${iconicsCoreVersion}",
             scrollablenumberpicker: "com.michaelmuenzer.android:ScrollableNumberPicker:${scrollableNumberPickerVersion}",
             maskededittext:         "com.github.pinball83:masked-edittext:${maskedEditTextVersion}",
+            loadingbuttonandroid:   "br.com.simplepass:loading-button-android:${loadingButtonAndroidVersion}",
     ]
 
     domainDependencies = [

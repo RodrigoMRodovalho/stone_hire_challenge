@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
  * Created by rrodovalho on 06/06/17.
  */
 
-public class FinishCheckoutUseCase extends UseCase<FinishCheckoutUseCase.CheckoutValue,Void> {
+public class FinishCheckoutUseCase extends UseCase<FinishCheckoutUseCase.CheckoutValue,Boolean> {
 
     @Inject
     StoreRepository.Repo repository;
@@ -23,11 +23,11 @@ public class FinishCheckoutUseCase extends UseCase<FinishCheckoutUseCase.Checkou
     }
 
     @Override
-    protected Observable<Void> executeUseCase(final CheckoutValue requestValues) {
+    protected Observable<Boolean> executeUseCase(final CheckoutValue requestValues) {
         return repository.confirmCheckout(requestValues.getStoreCheckout())
-                .map(aVoid -> {
+                .map(aBoolean -> {
                     repository.saveTransaction(requestValues.getStoreCheckout());
-                    return aVoid;
+                    return aBoolean;
                 });
     }
 

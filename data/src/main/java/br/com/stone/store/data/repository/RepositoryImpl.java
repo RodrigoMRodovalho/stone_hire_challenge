@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.domain.model.Transaction;
 import br.com.stone.store.domain.repository.StoreRepository;
@@ -27,12 +27,12 @@ public class RepositoryImpl implements StoreRepository.Repo {
     }
 
     @Override
-    public Observable<List<ProductItem>> getStoreProducts() {
+    public Observable<List<Product>> getStoreProducts() {
         return remoteSource.getStoreProducts();
     }
 
     @Override
-    public Observable<Void> confirmCheckout(StoreCheckout storeCheckout) {
+    public Observable<Boolean> confirmCheckout(StoreCheckout storeCheckout) {
         return remoteSource.confirmCheckout(storeCheckout);
     }
 

@@ -5,7 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.stone.store.data.model.ModelMapper;
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.domain.repository.StoreRepository;
 import io.reactivex.Observable;
@@ -27,7 +27,7 @@ public class RemoteDataSource implements StoreRepository.Remote{
     }
 
     @Override
-    public Observable<List<ProductItem>> getStoreProducts() {
+    public Observable<List<Product>> getStoreProducts() {
         return storeRestService.getStoreItems(StoreRestService.STORE_PRODUCTS_URL)
                 .flatMapIterable(storeItems -> storeItems)
                 .map(modelMapper::transformProductModel)
@@ -36,11 +36,10 @@ public class RemoteDataSource implements StoreRepository.Remote{
     }
 
     @Override
-    public Observable<Void> confirmCheckout(StoreCheckout storeCheckout) {
+    public Observable<Boolean> confirmCheckout(StoreCheckout storeCheckout) {
         return storeRestService.finishCheckout(
                 StoreRestService.CHECKOUT_URL,
                 modelMapper.transformCheckoutModel(storeCheckout))
-                .flatMap(voidResponse -> Observable.empty());
-
+                .flatMap(voidResponse -> Observable.just(voidResponse.isSuccessful()));
     }
 }

@@ -12,11 +12,9 @@ import android.widget.TextView;
 import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.ShoppingCartItem;
 import br.com.stone.store.presentation.R;
 import br.com.stone.store.presentation.shoppingcart.ShoppingCartContract;
 import br.com.stone.store.presentation.util.CurrencyFormatter;
@@ -30,18 +28,16 @@ import butterknife.ButterKnife;
 public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCartRecyclerAdapter.ShoppingCartViewHolder> {
 
     private Context context;
-    private Map<ProductItem,Integer> shoppingCartMap;
-    private List<ProductItem> productsItemList;
+    private List<ShoppingCartItem> shoppingCartItemList;
     private ShoppingCartContract.OnProductQuantityListener productQuantityListener;
 
     public ShoppingCartRecyclerAdapter(
             Context context,
-            Map<ProductItem, Integer> shoppingCartMap,
+            List<ShoppingCartItem> shoppingCartItemList,
             ShoppingCartContract.OnProductQuantityListener productQuantityListener) {
 
         this.context = context;
-        this.shoppingCartMap = shoppingCartMap;
-        this.productsItemList = new ArrayList<>(shoppingCartMap.keySet());
+        this.shoppingCartItemList = shoppingCartItemList;
         this.productQuantityListener = productQuantityListener;
     }
 
@@ -57,17 +53,14 @@ public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCa
     @Override
     public void onBindViewHolder(ShoppingCartViewHolder holder, int position) {
 
-        ProductItem productItem = productsItemList.get(position);
-
-        holder.bind(productItem,
-                shoppingCartMap.get(productItem),
-                position,
-                productQuantityListener);
+        holder.bind(shoppingCartItemList.get(position),
+                    position,
+                    productQuantityListener);
     }
 
     @Override
     public int getItemCount() {
-        return productsItemList.size();
+        return shoppingCartItemList.size();
     }
 
     static class ShoppingCartViewHolder extends RecyclerView.ViewHolder{
@@ -93,27 +86,28 @@ public class ShoppingCartRecyclerAdapter extends RecyclerView.Adapter<ShoppingCa
             ButterKnife.bind(this,itemView);
         }
 
-        void bind(ProductItem productItem,
-                  final int quantity,
+        void bind(ShoppingCartItem shoppingCartItem,
                   final int position,
                   final ShoppingCartContract.OnProductQuantityListener productQuantityListener ){
 
             Picasso.with(context)
-                    .load(productItem.getThumbnailImage())
+                    .load(shoppingCartItem.getProduct().getThumbnailImage())
                     .placeholder(R.drawable.product_loading_image)
                     .error(R.drawable.product_loading_error)
                     .into(productImageView);
 
-            productNameTextView.setText(productItem.getTitle());
-            productPriceTextView.setText(CurrencyFormatter.formatCentavoToReal(productItem.getPrice()));
-            productSellerTextView.setText(productItem.getSeller());
-            productItemCounterNumberPicker.setValue(quantity);
+            productNameTextView.setText(shoppingCartItem.getProduct().getTitle());
+            productPriceTextView.setText(CurrencyFormatter.formatCentavoToReal(shoppingCartItem.getProduct().getPrice()));
+            productSellerTextView.setText(shoppingCartItem.getProduct().getSeller());
+            productItemCounterNumberPicker.setValue(shoppingCartItem.getQuantity());
 
             productItemCounterNumberPicker
-                    .setListener(value -> productQuantityListener.onQuantitySelected(productItem,value));
+                    .setListener(value ->
+                            productQuantityListener.onQuantitySelected(shoppingCartItem.getProduct(),value));
 
             removeProductButton
-                    .setOnClickListener(view -> productQuantityListener.onRemovedProduct(productItem,position));
+                    .setOnClickListener(view ->
+                            productQuantityListener.onRemovedProduct(shoppingCartItem.getProduct(),position));
 
         }
     }

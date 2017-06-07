@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class ProductItem {
+public class Product {
     String title;
     String price;
     String zipCode;

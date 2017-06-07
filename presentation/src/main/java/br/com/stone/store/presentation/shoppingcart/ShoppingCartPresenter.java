@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import br.com.stone.store.data.executor.UseCaseHandler;
 import br.com.stone.store.domain.base.UseCase;
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import br.com.stone.store.domain.usecase.FinishCheckoutUseCase;
@@ -41,8 +41,8 @@ public class ShoppingCartPresenter extends BasePresenter<ShoppingCartContract.Vi
     }
 
     @Override
-    public void removeProduct(ProductItem productItem) {
-        shoppingCartManager.removeProductItem(productItem);
+    public void removeProduct(Product product) {
+        shoppingCartManager.removeProductItem(product);
 
         if (shoppingCartManager.getTotalItensCount() == 0){
             getView().showEmptyCart();
@@ -53,8 +53,8 @@ public class ShoppingCartPresenter extends BasePresenter<ShoppingCartContract.Vi
     }
 
     @Override
-    public void updateProductQuantity(ProductItem productItem, int quantity) {
-        shoppingCartManager.updateQuantity(productItem,quantity);
+    public void updateProductQuantity(Product product, int quantity) {
+        shoppingCartManager.updateQuantity(product,quantity);
         getView().updateTotalPrice(shoppingCartManager.getTotalPrice());
     }
 
@@ -74,12 +74,17 @@ public class ShoppingCartPresenter extends BasePresenter<ShoppingCartContract.Vi
         getView().showLoading();
 
         UseCaseHandler.execute(finishCheckoutUseCase,checkoutValue)
-                .subscribe(aVoid -> {
-                    getView().hideLoading();
-                    getView().showPaymentCompleteSuccessfully();
-                },throwable -> {
-                    getView().hideLoading();
-                    getView().showPaymentFails();
-                });
+                .subscribe(aBoolean -> {
+                            if ((boolean)aBoolean){
+                                shoppingCartManager.cleanCart();
+                                getView().showPaymentCompleteSuccessfully();
+                            }
+                            else{
+                                getView().showPaymentFails();
+                            }
+                        }
+                        ,throwable -> {
+                            getView().showPaymentFails();
+                        });
     }
 }

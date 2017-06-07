@@ -15,7 +15,7 @@ import java.util.List;
 
 import br.com.stone.store.data.executor.UseCaseHandler;
 import br.com.stone.store.domain.base.UseCase;
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import io.reactivex.Observable;
 
@@ -53,18 +53,18 @@ public class CatalogPresenterTest {
     @Test
     public void fetchCatalogExpectedSuccess() throws Exception {
 
-        List<ProductItem> productItemList = new ArrayList<>();
+        List<Product> productList = new ArrayList<>();
 
         PowerMockito.mockStatic(UseCaseHandler.class);
 
         when(UseCaseHandler.execute(fetchCatalogUseCase,null))
-                .thenReturn(Observable.just(productItemList));
+                .thenReturn(Observable.just(productList));
 
         presenter.fetchCatalog();
 
         verify(view).showLoading();
         verify(view).hideLoading();
-        verify(view).showCatalog(eq(productItemList));
+        verify(view).showCatalog(eq(productList));
     }
 
     @Test
@@ -88,13 +88,13 @@ public class CatalogPresenterTest {
     public void addToCart() throws Exception {
 
         int cartSize = 1;
-        ProductItem productItem = null;
+        Product product = null;
 
         when(shoppingCartManager.getTotalItensCount()).thenReturn(cartSize);
 
-        presenter.addToCart(productItem);
+        presenter.addToCart(product);
 
-        verify(shoppingCartManager).addProductItem(eq(productItem));
+        verify(shoppingCartManager).addProductItem(eq(product));
         verify(view).updateCartItemCounter(eq(cartSize));
     }
 

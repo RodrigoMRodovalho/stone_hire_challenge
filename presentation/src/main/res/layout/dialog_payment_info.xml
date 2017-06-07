@@ -51,8 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/card_number_masked_edittext"
-        android:layout_toRightOf="@+id/cardholder_name_textview"
-        />
+        android:layout_alignLeft="@+id/card_number_masked_edittext"
+        android:layout_alignStart="@+id/card_number_masked_edittext" />
 
     <TextView
         android:id="@+id/exp_date_name_textview"
@@ -72,8 +72,8 @@
         app:notMaskedSymbol="X"
         app:maskIconColor="@color/colorPrimary"
         android:layout_below="@id/cardholder_name_edittext"
-        android:layout_toRightOf="@+id/cardholder_name_textview"
-        />
+        android:layout_alignLeft="@+id/cardholder_name_edittext"
+        android:layout_alignStart="@+id/cardholder_name_edittext" />
 
     <TextView
         android:id="@+id/cvv_card"

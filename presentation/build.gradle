@@ -45,6 +45,7 @@ dependencies {
     compile rootProject.ext.presentationDependencies.iconicscore
     compile rootProject.ext.presentationDependencies.scrollablenumberpicker
     compile rootProject.ext.presentationDependencies.maskededittext
+    compile rootProject.ext.presentationDependencies.loadingbuttonandroid
 
     testCompile rootProject.ext.commonTestDependencies.junit
     testCompile rootProject.ext.commonTestDependencies.mockito

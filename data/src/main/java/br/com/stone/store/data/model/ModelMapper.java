@@ -1,6 +1,6 @@
 package br.com.stone.store.data.model;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.domain.model.StoreCheckout;
 
 /**
@@ -9,8 +9,8 @@ import br.com.stone.store.domain.model.StoreCheckout;
 
 public class ModelMapper {
 
-    public ProductItem transformProductModel(StoreItem storeItem){
-        return ProductItem.builder()
+    public Product transformProductModel(StoreItem storeItem){
+        return Product.builder()
                 .title(storeItem.getTitle())
                 .price(storeItem.getPrice())
                 .seller(storeItem.getSeller())

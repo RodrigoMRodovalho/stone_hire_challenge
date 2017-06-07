@@ -1,9 +1,12 @@
 package br.com.stone.store.domain.shoppingcart;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
+import br.com.stone.store.domain.model.ShoppingCartItem;
 
 /**
  * Created by rrodovalho on 04/06/17.
@@ -11,56 +14,64 @@ import br.com.stone.store.domain.model.ProductItem;
 
 public class ShoppingCartManager implements IShoppingCartManager {
 
-    private Map<ProductItem,Integer> shoppingCartMap;
+    private Map<Product,Integer> shoppingCartMap;
     private int totalPrice;
+    private ArrayList shoppingCartItemList;
 
     public ShoppingCartManager() {
         shoppingCartMap = new HashMap<>();
     }
 
     @Override
-    public void addProductItem(ProductItem productItem) {
+    public void addProductItem(Product product) {
 
         int qnt;
 
-        if (shoppingCartMap.containsKey(productItem)){
-            qnt = shoppingCartMap.get(productItem) + 1;
+        if (shoppingCartMap.containsKey(product)){
+            qnt = shoppingCartMap.get(product) + 1;
         }
         else{
             qnt = 1;
         }
 
-        shoppingCartMap.put(productItem, qnt);
-        totalPrice += qnt * Integer.parseInt(productItem.getPrice());
+        shoppingCartMap.put(product, qnt);
+        totalPrice += qnt * Integer.parseInt(product.getPrice());
     }
 
     @Override
-    public void removeProductItem(ProductItem productItem) {
+    public void removeProductItem(Product product) {
 
-        if (shoppingCartMap.containsKey(productItem)){
-            totalPrice -= shoppingCartMap.get(productItem) * Integer.parseInt(productItem.getPrice());
-            shoppingCartMap.remove(productItem);
+        if (shoppingCartMap.containsKey(product)){
+            totalPrice -= shoppingCartMap.get(product) * Integer.parseInt(product.getPrice());
+            shoppingCartMap.remove(product);
         }
     }
 
-    public Map<ProductItem,Integer> getShoppingCart() {
-        return shoppingCartMap;
+    public List<ShoppingCartItem> getShoppingCart() {
+
+        shoppingCartItemList = new ArrayList<>(shoppingCartMap.size());
+
+        for (Map.Entry<Product, Integer> entry : shoppingCartMap.entrySet()) {
+            shoppingCartItemList.add(new ShoppingCartItem(entry.getKey(), entry.getValue()));
+        }
+
+        return shoppingCartItemList;
     }
 
     @Override
-    public void updateQuantity(ProductItem productItem, int quantity) {
+    public void updateQuantity(Product product, int quantity) {
 
-        if (shoppingCartMap.containsKey(productItem)){
-            int currentQuantity = shoppingCartMap.get(productItem);
+        if (shoppingCartMap.containsKey(product)){
+            int currentQuantity = shoppingCartMap.get(product);
 
             if (currentQuantity > quantity){
-                totalPrice -= (currentQuantity - quantity) * Integer.parseInt(productItem.getPrice());
+                totalPrice -= (currentQuantity - quantity) * Integer.parseInt(product.getPrice());
             }
             else{
-                totalPrice += (quantity - currentQuantity ) * Integer.parseInt(productItem.getPrice());
+                totalPrice += (quantity - currentQuantity ) * Integer.parseInt(product.getPrice());
             }
 
-            shoppingCartMap.put(productItem, quantity);
+            shoppingCartMap.put(product, quantity);
         }
     }
 

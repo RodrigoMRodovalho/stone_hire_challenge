@@ -13,4 +13,9 @@
     <string name="cardnumber_edittext_hint">Número do cartão</string>
     <string name="confirm_payment">Confirmar</string>
     <string name="cancel_payment">Cancelar</string>
+    <string name="empty_cart">Seu carrinho está vazio :(</string>
+    <string name="invalid_cardnumber">Número de Cartão Inválido</string>
+    <string name="invalid_cardholder_name">Nome inválido</string>
+    <string name="invalid_date">Data Inválida</string>
+    <string name="invalid_cvv">CVV Inválido</string>
 </resources>

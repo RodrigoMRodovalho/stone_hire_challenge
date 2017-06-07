@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import br.com.stone.store.data.executor.UseCaseHandler;
 import br.com.stone.store.domain.base.UseCase;
 import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.presentation.base.BasePresenter;
 
 /**
@@ -36,7 +36,7 @@ public class CatalogPresenter extends BasePresenter<CatalogContract.View>
                 .subscribe(
                         productItemList -> {
                             getView().hideLoading();
-                            getView().showCatalog((List<ProductItem>) productItemList);
+                            getView().showCatalog((List<Product>) productItemList);
                         },
                         throwable -> {
                             getView().hideLoading();
@@ -46,8 +46,8 @@ public class CatalogPresenter extends BasePresenter<CatalogContract.View>
     }
 
     @Override
-    public void addToCart(ProductItem productItem) {
-        shoppingCartManager.addProductItem(productItem);
+    public void addToCart(Product product) {
+        shoppingCartManager.addProductItem(product);
         getView().updateCartItemCounter(shoppingCartManager.getTotalItensCount());
     }
 

@@ -19,7 +19,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.presentation.R;
 import br.com.stone.store.presentation.application.StoreApplication;
 import br.com.stone.store.presentation.base.BaseActivity;
@@ -61,9 +61,10 @@ public class CatalogActivity extends BaseActivity
     @Inject
     RecyclerView.ItemAnimator catalogRecyclerViewItemAnimator;
 
-    private List<ProductItem> productItemList;
+    private List<Product> productList;
     private CatalogRecyclerViewAdapter catalogAdapter;
     private MenuItem shoppingCartMenuItem;
+    private Drawable shoppingCartMenuIconDrawable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,6 @@ public class CatalogActivity extends BaseActivity
 
         shoppingCartMenuItem = menu.findItem(R.id.menu_shopping_cart);
 
-        Drawable shoppingCartMenuIconDrawable;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             shoppingCartMenuIconDrawable = getDrawable(R.drawable.ic_action_shopping_cart);
         }
@@ -94,15 +94,21 @@ public class CatalogActivity extends BaseActivity
             shoppingCartMenuIconDrawable = getResources().getDrawable(R.drawable.ic_action_shopping_cart);
         }
 
+        updateShoppingCartMenuBadge();
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void updateShoppingCartMenuBadge(){
+
         ActionItemBadge.update(
                 this,
                 shoppingCartMenuItem,
                 shoppingCartMenuIconDrawable,
                 ActionItemBadge.BadgeStyles.RED,
                 presenter.getBasketSize());
-
-        return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -165,14 +171,14 @@ public class CatalogActivity extends BaseActivity
     }
 
     @Override
-    public void showCatalog(List<ProductItem> catalog) {
+    public void showCatalog(List<Product> catalog) {
 
         catalogRecyclerView.setVisibility(View.VISIBLE);
-        productItemList = catalog;
+        productList = catalog;
         catalogAdapter = new CatalogRecyclerViewAdapter(
                                         CatalogActivity.this,
                                         CatalogActivity.this,
-                                        productItemList);
+                                        productList);
 
         catalogRecyclerView.setAdapter(catalogAdapter);
 
@@ -202,12 +208,13 @@ public class CatalogActivity extends BaseActivity
 
     @Override
     public void onProductSelected(int position) {
-        presenter.addToCart(productItemList.get(position));
+        presenter.addToCart(productList.get(position));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        updateShoppingCartMenuBadge();
         presenter.fetchCatalog();
     }
 }

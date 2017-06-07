@@ -1,8 +1,9 @@
 package br.com.stone.store.presentation.shoppingcart;
 
-import java.util.Map;
+import java.util.List;
 
-import br.com.stone.store.domain.model.ProductItem;
+import br.com.stone.store.domain.model.Product;
+import br.com.stone.store.domain.model.ShoppingCartItem;
 import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.presentation.base.MvpPresenter;
 import br.com.stone.store.presentation.base.MvpView;
@@ -16,25 +17,24 @@ public interface ShoppingCartContract {
     interface View extends MvpView{
         void updateTotalPrice(String totalPrice);
         void requestPaymentInformation();
-        void showShoppingCart(Map<ProductItem,Integer> shoppingCart);
+        void showShoppingCart(List<ShoppingCartItem> shoppingCartItemList);
         void showEmptyCart();
         void showLoading();
-        void hideLoading();
         void showPaymentCompleteSuccessfully();
         void showPaymentFails();
     }
 
     interface Presenter extends MvpPresenter<View>{
         void fetchShoppingCart();
-        void removeProduct(ProductItem productItem);
-        void updateProductQuantity(ProductItem productItem, int quantity);
+        void removeProduct(Product product);
+        void updateProductQuantity(Product product, int quantity);
         void finishCheckout();
         void sendCheckoutToApproval(StoreCheckout storeCheckout);
     }
 
     interface OnProductQuantityListener{
-        void onQuantitySelected(ProductItem productItem,int quantity);
-        void onRemovedProduct(ProductItem productItem,int position);
+        void onQuantitySelected(Product product, int quantity);
+        void onRemovedProduct(Product product, int position);
     }
 
 }
