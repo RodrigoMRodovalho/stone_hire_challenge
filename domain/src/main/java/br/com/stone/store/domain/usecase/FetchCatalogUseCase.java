@@ -23,7 +23,7 @@ public class FetchCatalogUseCase extends UseCase<UseCase.RequestValues,List<Prod
     }
 
     @Override
-    protected Observable<List<Product>> executeUseCase(RequestValues requestValues) {
+    public Observable<List<Product>> executeUseCase(RequestValues requestValues) {
         return repository.getStoreProducts();
     }
 }

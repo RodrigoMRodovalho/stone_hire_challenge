@@ -21,6 +21,10 @@ dependencies {
     compile rootProject.ext.commonDependencies.dagger
     compile rootProject.ext.commonDependencies.javaxannotation
     apt rootProject.ext.commonDependencies.daggercompiler
+
+    testCompile rootProject.ext.commonTestDependencies.junit
+    testCompile rootProject.ext.commonTestDependencies.mockito
+    testCompile rootProject.ext.commonTestDependencies.hamcrest
 }
 
 sourceCompatibility = "1.8"

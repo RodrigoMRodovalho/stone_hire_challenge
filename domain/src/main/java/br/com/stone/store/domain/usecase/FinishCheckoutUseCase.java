@@ -23,7 +23,7 @@ public class FinishCheckoutUseCase extends UseCase<FinishCheckoutUseCase.Checkou
     }
 
     @Override
-    protected Observable<Boolean> executeUseCase(final CheckoutValue requestValues) {
+    public Observable<Boolean> executeUseCase(final CheckoutValue requestValues) {
         return repository.confirmCheckout(requestValues.getStoreCheckout())
                 .map(aBoolean -> {
                     repository.saveTransaction(requestValues.getStoreCheckout());

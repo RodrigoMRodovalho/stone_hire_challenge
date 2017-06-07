@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 public class LocalDataSource implements StoreRepository.Local {
 
     @Override
-    public Observable<Void> saveTransaction(StoreCheckout storeCheckout) {
+    public Observable<Boolean> saveTransaction(StoreCheckout storeCheckout) {
         return null;
     }
 

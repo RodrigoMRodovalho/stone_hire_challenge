@@ -36,4 +36,10 @@ dependencies {
     annotationProcessor rootProject.ext.commonDependencies.lombok
     compile rootProject.ext.commonDependencies.dagger
     annotationProcessor rootProject.ext.commonDependencies.daggercompiler
+
+    testCompile rootProject.ext.commonTestDependencies.junit
+    testCompile rootProject.ext.commonTestDependencies.mockito
+    testCompile rootProject.ext.commonTestDependencies.hamcrest
+    testCompile rootProject.ext.commonTestDependencies.powermock
+    testCompile rootProject.ext.commonTestDependencies.powermockmockito
 }

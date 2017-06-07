@@ -35,7 +35,7 @@ public class ShoppingCartManager implements IShoppingCartManager {
         }
 
         shoppingCartMap.put(product, qnt);
-        totalPrice += qnt * Integer.parseInt(product.getPrice());
+        totalPrice += Integer.parseInt(product.getPrice());
     }
 
     @Override

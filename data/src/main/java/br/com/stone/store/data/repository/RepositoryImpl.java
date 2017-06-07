@@ -37,7 +37,7 @@ public class RepositoryImpl implements StoreRepository.Repo {
     }
 
     @Override
-    public Observable<Void> saveTransaction(StoreCheckout storeCheckout) {
+    public Observable<Boolean> saveTransaction(StoreCheckout storeCheckout) {
         return localSource.saveTransaction(storeCheckout);
     }
 

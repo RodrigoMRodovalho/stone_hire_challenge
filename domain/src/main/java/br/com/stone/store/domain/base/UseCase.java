@@ -18,7 +18,7 @@ public abstract class UseCase<RV extends UseCase.RequestValues,T> {
         return executeUseCase(mRequestValues);
     }
 
-    protected abstract Observable<T> executeUseCase(RV requestValues);
+    public abstract Observable<T> executeUseCase(RV requestValues);
 
 
     public interface RequestValues {

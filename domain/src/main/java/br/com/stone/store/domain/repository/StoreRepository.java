@@ -21,7 +21,7 @@ public interface StoreRepository{
     }
 
     interface Local{
-        Observable<Void> saveTransaction(StoreCheckout storeCheckout);
+        Observable<Boolean> saveTransaction(StoreCheckout storeCheckout);
         Observable<List<Transaction>> getFinalizedTransactions();
     }
 }
