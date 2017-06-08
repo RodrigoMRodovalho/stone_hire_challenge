@@ -1,6 +1,7 @@
 package br.com.stone.store.domain.shoppingcart;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,10 @@ public class ShoppingCartManager implements IShoppingCartManager {
     }
 
     public List<ShoppingCartItem> getShoppingCart() {
+
+        if (shoppingCartMap.size() == 0){
+            return Collections.emptyList();
+        }
 
         shoppingCartItemList = new ArrayList<>(shoppingCartMap.size());
 

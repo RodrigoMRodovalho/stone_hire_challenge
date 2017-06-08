@@ -29,15 +29,8 @@ public class ShoppingCartPresenter extends BasePresenter<ShoppingCartContract.Vi
     }
 
     @Override
-    public void fetchShoppingCart() {
-
-        if (shoppingCartManager.getTotalItensCount() == 0){
-            getView().showEmptyCart();
-        }
-        else{
-            getView().showShoppingCart(shoppingCartManager.getShoppingCart());
-            getView().updateTotalPrice(shoppingCartManager.getTotalPrice());
-        }
+    public void obtainShoppingCartTotalPrice() {
+        getView().updateTotalPrice(shoppingCartManager.getTotalPrice());
     }
 
     @Override

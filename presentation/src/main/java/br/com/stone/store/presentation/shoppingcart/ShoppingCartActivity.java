@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.pinball83.maskededittext.MaskedEditText;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -32,6 +37,7 @@ import br.com.stone.store.presentation.shoppingcart.adapter.ShoppingCartRecycler
 import br.com.stone.store.presentation.shoppingcart.internal.di.DaggerShoppingCartComponent;
 import br.com.stone.store.presentation.shoppingcart.internal.di.ShoppingCartModule;
 import br.com.stone.store.presentation.util.CurrencyFormatter;
+import br.com.stone.store.presentation.util.EspressoIdlingResource;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -40,6 +46,7 @@ import butterknife.OnClick;
 public class ShoppingCartActivity extends BaseActivity
         implements ShoppingCartContract.View, ShoppingCartContract.OnProductQuantityListener {
 
+    public static final String INTENT_EXTRA_KEY = "shoopingcartitems";
     private static final int CARD_NUMBER_SIZE = 16;
     private static final int CARDHOLDER_NAME_MIN_SIZE = 10;
     private static final int EXP_DATE_SIZE = 4;
@@ -56,7 +63,8 @@ public class ShoppingCartActivity extends BaseActivity
     @BindView(R.id.empty_cart_relativeLayout)
     RelativeLayout emptyCartRelativeLayout;
 
-
+    @Inject
+    Gson gson;
     @Inject
     ShoppingCartContract.Presenter presenter;
     @Inject
@@ -71,8 +79,11 @@ public class ShoppingCartActivity extends BaseActivity
     private MaskedEditText expDateMasketEditText;
     private MaskedEditText cvvMasketEditText;
 
-    public static void start(Context context) {
+    public static void start(Context context,String shoppingCartJson) {
         Intent starter = new Intent(context, ShoppingCartActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(INTENT_EXTRA_KEY,shoppingCartJson);
+        starter.putExtras(bundle);
         context.startActivity(starter);
     }
 
@@ -82,14 +93,15 @@ public class ShoppingCartActivity extends BaseActivity
         setContentView(R.layout.activity_shopping_cart);
         ButterKnife.bind(this);
 
-        shoppingCartRecyclerView.setLayoutManager(linearLayoutManager);
-        shoppingCartRecyclerView.addItemDecoration(itemDecoration);
-    }
+        Intent intent = getIntent();
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        presenter.fetchShoppingCart();
+        if (intent != null){
+            String shoppingCartJson = intent.getExtras().getString(INTENT_EXTRA_KEY);
+
+            if (shoppingCartJson != null){
+                showShoppingCart(shoppingCartJson);
+            }
+        }
     }
 
     @OnClick(R.id.finish_checkout_button)
@@ -183,15 +195,24 @@ public class ShoppingCartActivity extends BaseActivity
         alertDialog.show();
     }
 
-    @Override
-    public void showShoppingCart(List<ShoppingCartItem> shoppingCartItemList) {
+    public void showShoppingCart(String shoppingCartJson) {
 
         emptyCartRelativeLayout.setVisibility(View.GONE);
         cartRelativeLayout.setVisibility(View.VISIBLE);
 
-        this.shoppingCartItemList = shoppingCartItemList;
-        this.shoppingCartAdapter = new ShoppingCartRecyclerAdapter(this,shoppingCartItemList,this);
-        shoppingCartRecyclerView.setAdapter(shoppingCartAdapter);
+        Type listType = new TypeToken<List<ShoppingCartItem>>() {}.getType();
+        shoppingCartItemList = gson.fromJson(shoppingCartJson,listType);
+
+        if (shoppingCartItemList.size() == 0) {
+            showEmptyCart();
+        }
+        else {
+            shoppingCartRecyclerView.setLayoutManager(linearLayoutManager);
+            shoppingCartRecyclerView.addItemDecoration(itemDecoration);
+            shoppingCartAdapter = new ShoppingCartRecyclerAdapter(this, shoppingCartItemList, this);
+            shoppingCartRecyclerView.setAdapter(shoppingCartAdapter);
+            presenter.obtainShoppingCartTotalPrice();
+        }
     }
 
     @Override
@@ -230,5 +251,10 @@ public class ShoppingCartActivity extends BaseActivity
         shoppingCartAdapter.notifyItemRangeChanged(position, shoppingCartItemList.size());
         presenter.removeProduct(product);
 
+    }
+
+    @VisibleForTesting
+    public IdlingResource getCountingIdlingResource() {
+        return EspressoIdlingResource.getIdlingResource();
     }
 }

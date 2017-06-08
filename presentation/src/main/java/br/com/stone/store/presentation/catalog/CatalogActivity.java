@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.mikepenz.actionitembadge.library.ActionItemBadge;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.stone.store.domain.model.Product;
+import br.com.stone.store.domain.model.ShoppingCartItem;
 import br.com.stone.store.presentation.R;
 import br.com.stone.store.presentation.application.StoreApplication;
 import br.com.stone.store.presentation.base.BaseActivity;
@@ -54,7 +56,8 @@ public class CatalogActivity extends BaseActivity
     @BindView(R.id.error_description_textview)
     TextView errorDescriptionTextView;
 
-
+    @Inject
+    Gson gson;
     @Inject
     CatalogContract.Presenter presenter;
     @Inject
@@ -194,8 +197,8 @@ public class CatalogActivity extends BaseActivity
     }
 
     @Override
-    public void showShoppingCartScreen() {
-        ShoppingCartActivity.start(this);
+    public void showShoppingCartScreen(List<ShoppingCartItem> shoppingCartItems) {
+        ShoppingCartActivity.start(this,gson.toJson(shoppingCartItems));
     }
 
     @Override

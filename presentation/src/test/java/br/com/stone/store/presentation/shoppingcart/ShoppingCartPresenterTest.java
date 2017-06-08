@@ -9,13 +9,9 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.stone.store.data.executor.UseCaseHandler;
 import br.com.stone.store.domain.base.UseCase;
 import br.com.stone.store.domain.model.Product;
-import br.com.stone.store.domain.model.ShoppingCartItem;
 import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import br.com.stone.store.domain.usecase.FinishCheckoutUseCase;
@@ -52,31 +48,16 @@ public class ShoppingCartPresenterTest {
     }
 
     @Test
-    public void fetchShoppingCartExpectedEmptyCart() throws Exception {
-
-        when(shoppingCartManager.getTotalItensCount()).thenReturn(0);
-
-        presenter.fetchShoppingCart();
-
-        verify(view).showEmptyCart();
-    }
-
-
-
-    @Test
     public void fetchShoppingCartExpectedNonEmptyCart() throws Exception {
 
 
         String totalPrice = "12000";
-        List<ShoppingCartItem> shoppingCartItemList = new ArrayList<>();
 
         when(shoppingCartManager.getTotalItensCount()).thenReturn(1);
-        when(shoppingCartManager.getShoppingCart()).thenReturn(shoppingCartItemList);
         when(shoppingCartManager.getTotalPrice()).thenReturn(totalPrice);
 
-        presenter.fetchShoppingCart();
+        presenter.obtainShoppingCartTotalPrice();
 
-        verify(view).showShoppingCart(eq(shoppingCartItemList));
         verify(view).updateTotalPrice(eq(totalPrice));
 
     }

@@ -16,6 +16,7 @@ import java.util.List;
 import br.com.stone.store.data.executor.UseCaseHandler;
 import br.com.stone.store.domain.base.UseCase;
 import br.com.stone.store.domain.model.Product;
+import br.com.stone.store.domain.model.ShoppingCartItem;
 import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import io.reactivex.Observable;
 
@@ -100,8 +101,14 @@ public class CatalogPresenterTest {
 
     @Test
     public void goToShoppingCartScreen() throws Exception {
+
+        List<ShoppingCartItem> shoppingCartItemList = new ArrayList<>();
+
+        when(shoppingCartManager.getShoppingCart()).thenReturn(shoppingCartItemList);
+
         presenter.goToShoppingCartScreen();
-        verify(view).showShoppingCartScreen();
+
+        verify(view).showShoppingCartScreen(eq(shoppingCartItemList));
     }
 
     @Test

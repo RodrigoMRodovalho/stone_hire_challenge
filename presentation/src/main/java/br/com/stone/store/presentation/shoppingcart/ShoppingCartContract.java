@@ -1,9 +1,6 @@
 package br.com.stone.store.presentation.shoppingcart;
 
-import java.util.List;
-
 import br.com.stone.store.domain.model.Product;
-import br.com.stone.store.domain.model.ShoppingCartItem;
 import br.com.stone.store.domain.model.StoreCheckout;
 import br.com.stone.store.presentation.base.MvpPresenter;
 import br.com.stone.store.presentation.base.MvpView;
@@ -17,7 +14,6 @@ public interface ShoppingCartContract {
     interface View extends MvpView{
         void updateTotalPrice(String totalPrice);
         void requestPaymentInformation();
-        void showShoppingCart(List<ShoppingCartItem> shoppingCartItemList);
         void showEmptyCart();
         void showLoading();
         void showPaymentCompleteSuccessfully();
@@ -25,7 +21,7 @@ public interface ShoppingCartContract {
     }
 
     interface Presenter extends MvpPresenter<View>{
-        void fetchShoppingCart();
+        void obtainShoppingCartTotalPrice();
         void removeProduct(Product product);
         void updateProductQuantity(Product product, int quantity);
         void finishCheckout();

@@ -3,6 +3,7 @@ package br.com.stone.store.presentation.catalog;
 import java.util.List;
 
 import br.com.stone.store.domain.model.Product;
+import br.com.stone.store.domain.model.ShoppingCartItem;
 import br.com.stone.store.presentation.base.MvpPresenter;
 import br.com.stone.store.presentation.base.MvpView;
 
@@ -17,7 +18,7 @@ public interface CatalogContract {
         void hideLoading();
         void showCatalog(List<Product> catalog);
         void showError(String errorMessage);
-        void showShoppingCartScreen();
+        void showShoppingCartScreen(List<ShoppingCartItem> shoppingCartItems);
         void showTransactionHistoryScreen();
         void updateCartItemCounter(int counter);
     }

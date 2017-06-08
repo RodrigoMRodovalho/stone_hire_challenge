@@ -2,6 +2,8 @@ package br.com.stone.store.data.di.modules;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import javax.inject.Singleton;
 
 import br.com.stone.store.data.repository.remote.StoreRestService;
@@ -56,6 +58,12 @@ public class NetworkModule {
                 .cache(cache)
                 .build();
 
+    }
+
+    @Provides
+    @Singleton
+    Gson providesGson(){
+        return new Gson();
     }
 
 }

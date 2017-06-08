@@ -18,8 +18,8 @@ import org.junit.runner.RunWith;
 
 import br.com.stone.store.data.repository.remote.ServerUrl;
 import br.com.stone.store.presentation.R;
-import br.com.stone.store.presentation.catalog.matcher.RecyclerViewMatcher;
-import br.com.stone.store.presentation.catalog.matcher.ViewChildMatcher;
+import br.com.stone.store.presentation.matcher.RecyclerViewMatcher;
+import br.com.stone.store.presentation.matcher.ViewChildMatcher;
 import br.com.stone.store.presentation.shoppingcart.ShoppingCartActivity;
 import br.com.stone.store.presentation.transactionhistory.TransactionHistoryActivity;
 import okhttp3.mockwebserver.MockResponse;
@@ -29,12 +29,15 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.BundleMatchers.hasEntry;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtras;
 import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalToIgnoringCase;
 import static org.hamcrest.core.IsNot.not;
 
 /**
@@ -64,6 +67,29 @@ public class CatalogActivityTest {
             "    \"thumbnailHd\": \"https://cdn.awsli.com.br/1000x1000/21/21351/produto/7234148/55692a941d.jpg\",\n" +
             "    \"date\": \"26/11/2015\"\n" +
             "  }]";
+
+    static String SHOPPING_CART_TWO_ITENS_JSON = "[\n" +
+            "  {\n" +
+            "    \"product\": {\n" +
+            "      \"price\": \"7990\",\n" +
+            "      \"seller\": \"Joana\",\n" +
+            "      \"thumbnailImage\": \"https://cdn.awsli.com.br/1000x1000/21/21351/produto/7234148/55692a941d.jpg\",\n" +
+            "      \"title\": \"Blusa Han Shot First\",\n" +
+            "      \"zipCode\": \"13500-110\"\n" +
+            "    },\n" +
+            "    \"quantity\": 1\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"product\": {\n" +
+            "      \"price\": \"7990\",\n" +
+            "      \"seller\": \"João da Silva\",\n" +
+            "      \"thumbnailImage\": \"https://cdn.awsli.com.br/600x450/21/21351/produto/3853007/f66e8c63ab.jpg\",\n" +
+            "      \"title\": \"Blusa do Imperio\",\n" +
+            "      \"zipCode\": \"78993-000\"\n" +
+            "    },\n" +
+            "    \"quantity\": 1\n" +
+            "  }\n" +
+            "]";
 
     @Rule
     public ActivityTestRule<CatalogActivity> testRule =
@@ -165,13 +191,36 @@ public class CatalogActivityTest {
     @Test
     public void showShoppingCartScreen() throws Exception {
 
+        MockWebServer server = new MockWebServer();
+        server.start();
+        ServerUrl.STORE_PRODUCTS_URL = server.url("/").toString();
+        server.enqueue(new MockResponse().setBody(RESPONSE_TWO_ITENS_JSON));
+
         Intents.init();
         testRule.launchActivity(new Intent());
 
+        onView(RecyclerViewMatcher
+                .atPositionOnView(0, R.id.add_to_cart_button))
+                .perform(click());
+
+        onView(RecyclerViewMatcher
+                .atPositionOnView(1, R.id.add_to_cart_button))
+                .perform(click());
+
         onView(withId(R.id.menu_shopping_cart)).perform(click());
 
-        intended(hasComponent(ShoppingCartActivity.class.getName()));
+        intended(
+                allOf(
+                        hasComponent(ShoppingCartActivity.class.getName())//,
+                        //fix-me
+                        //hasExtras(
+                        //        hasEntry(ShoppingCartActivity.INTENT_EXTRA_KEY, equalToIgnoringCase(SHOPPING_CART_TWO_ITENS_JSON))
+                         //)
+                )
+        );
         Intents.release();
+
+        server.shutdown();
     }
 
     @Test
@@ -185,6 +234,7 @@ public class CatalogActivityTest {
         intended(hasComponent(TransactionHistoryActivity.class.getName()));
         Intents.release();
     }
+
 
     @Test
     public void updateCartItemCounter() throws Exception {

@@ -2,6 +2,8 @@ package br.com.stone.store.presentation.di.components;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+
 import javax.inject.Singleton;
 
 import br.com.stone.store.data.di.modules.NetworkModule;
@@ -28,4 +30,5 @@ public interface ApplicationComponent {
     FetchCatalogUseCase getFetchCatalogUseCase();
     IShoppingCartManager getShoppingCartManager();
     FinishCheckoutUseCase getFinishCheckoutUseCase();
+    Gson getGson();
 }

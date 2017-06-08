@@ -1,4 +1,4 @@
-package br.com.stone.store.presentation.catalog.matcher;
+package br.com.stone.store.presentation.matcher;
 
 
 import android.content.res.Resources;
