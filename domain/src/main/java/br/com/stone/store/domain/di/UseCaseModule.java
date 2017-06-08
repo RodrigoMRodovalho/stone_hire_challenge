@@ -7,6 +7,7 @@ import br.com.stone.store.domain.shoppingcart.ShoppingCartManager;
 import br.com.stone.store.domain.repository.StoreRepository;
 import br.com.stone.store.domain.usecase.FetchCatalogUseCase;
 import br.com.stone.store.domain.usecase.FinishCheckoutUseCase;
+import br.com.stone.store.domain.usecase.LoadTransactionsUseCase;
 import dagger.Module;
 import dagger.Provides;
 
@@ -31,6 +32,11 @@ public class UseCaseModule {
     @Provides
     FinishCheckoutUseCase providesFinishCheckoutUseCase(StoreRepository.Repo repository){
         return new FinishCheckoutUseCase(repository);
+    }
+
+    @Provides
+    LoadTransactionsUseCase providesLoadTransactionUseCase(StoreRepository.Repo repository){
+        return new LoadTransactionsUseCase(repository);
     }
 
 }

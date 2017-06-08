@@ -18,4 +18,5 @@
     <string name="invalid_cardholder_name">Nome inválido</string>
     <string name="invalid_date">Data Inválida</string>
     <string name="invalid_cvv">CVV Inválido</string>
+    <string name="empty_trans_history">Histórico vazio :(</string>
 </resources>

@@ -14,6 +14,7 @@ import br.com.stone.store.domain.repository.StoreRepository;
 import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import br.com.stone.store.domain.usecase.FetchCatalogUseCase;
 import br.com.stone.store.domain.usecase.FinishCheckoutUseCase;
+import br.com.stone.store.domain.usecase.LoadTransactionsUseCase;
 import br.com.stone.store.presentation.di.modules.AndroidModule;
 import dagger.Component;
 
@@ -30,5 +31,6 @@ public interface ApplicationComponent {
     FetchCatalogUseCase getFetchCatalogUseCase();
     IShoppingCartManager getShoppingCartManager();
     FinishCheckoutUseCase getFinishCheckoutUseCase();
+    LoadTransactionsUseCase getLoadTransactionUseCase();
     Gson getGson();
 }

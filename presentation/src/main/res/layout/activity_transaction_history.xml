@@ -6,4 +6,69 @@
     android:layout_height="match_parent"
     tools:context="br.com.stone.store.presentation.transactionhistory.TransactionHistoryActivity">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/loading_framelayout"
+        android:visibility="visible"
+        >
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.ProgressBar"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+            android:id="@+id/loading_progress_bar"
+            />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/empty_trans_history_relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:id="@+id/empty_trans_history_imageview"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/emptythistory"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_trans_history"
+            android:id="@+id/empty_trans_history_msg_textview"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/empty_trans_history_imageview"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/retryButton"
+            android:layout_below="@id/empty_trans_history_msg_textview"
+            android:layout_centerHorizontal="true"
+            android:text="@string/retry_connection"
+            />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/trans_history_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:scrollbars="vertical"
+        >
+
+    </android.support.v7.widget.RecyclerView>
+
 </RelativeLayout>

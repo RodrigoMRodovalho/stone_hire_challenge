@@ -8,6 +8,8 @@ import br.com.stone.store.domain.di.UseCaseModule;
 import br.com.stone.store.presentation.di.components.ApplicationComponent;
 import br.com.stone.store.presentation.di.components.DaggerApplicationComponent;
 import br.com.stone.store.presentation.di.modules.AndroidModule;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by rrodovalho on 03/06/17.
@@ -21,6 +23,12 @@ public class StoreApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initializeInjection();
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("stonewars.db")
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
     }
 
     private void initializeInjection() {
