@@ -2,8 +2,10 @@ package br.com.stone.store.presentation.catalog;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -28,6 +30,7 @@ import br.com.stone.store.presentation.catalog.internal.di.CatalogModule;
 import br.com.stone.store.presentation.catalog.internal.di.DaggerCatalogComponent;
 import br.com.stone.store.presentation.shoppingcart.ShoppingCartActivity;
 import br.com.stone.store.presentation.transactionhistory.TransactionHistoryActivity;
+import br.com.stone.store.presentation.util.EspressoIdlingResource;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -106,7 +109,7 @@ public class CatalogActivity extends BaseActivity
                 shoppingCartMenuItem,
                 shoppingCartMenuIconDrawable,
                 ActionItemBadge.BadgeStyles.RED,
-                presenter.getBasketSize());
+                presenter.getShoppingCartSize());
     }
 
 
@@ -216,5 +219,10 @@ public class CatalogActivity extends BaseActivity
         super.onStart();
         updateShoppingCartMenuBadge();
         presenter.fetchCatalog();
+    }
+
+    @VisibleForTesting
+    public IdlingResource getCountingIdlingResource() {
+        return EspressoIdlingResource.getIdlingResource();
     }
 }

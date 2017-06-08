@@ -116,7 +116,7 @@ public class CatalogPresenterTest {
         int cartSize = 5;
 
         when(shoppingCartManager.getTotalItensCount()).thenReturn(cartSize);
-        int s = presenter.getBasketSize();
+        int s = presenter.getShoppingCartSize();
 
         assertEquals(cartSize,s);
     }

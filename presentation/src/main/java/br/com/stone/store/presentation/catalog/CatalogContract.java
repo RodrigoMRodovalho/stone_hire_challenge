@@ -27,7 +27,7 @@ public interface CatalogContract {
         void addToCart(Product product);
         void goToShoppingCartScreen();
         void goToTransactionHistoryScreen();
-        int getBasketSize();
+        int getShoppingCartSize();
     }
 
     interface OnProductSelectionListener{

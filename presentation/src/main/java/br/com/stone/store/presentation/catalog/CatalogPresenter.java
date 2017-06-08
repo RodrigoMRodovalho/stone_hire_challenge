@@ -9,6 +9,7 @@ import br.com.stone.store.domain.base.UseCase;
 import br.com.stone.store.domain.shoppingcart.IShoppingCartManager;
 import br.com.stone.store.domain.model.Product;
 import br.com.stone.store.presentation.base.BasePresenter;
+import br.com.stone.store.presentation.util.EspressoIdlingResource;
 
 /**
  * Created by rrodovalho on 03/06/17.
@@ -32,15 +33,19 @@ public class CatalogPresenter extends BasePresenter<CatalogContract.View>
 
         getView().showLoading();
 
+        EspressoIdlingResource.increment();
+
         UseCaseHandler.execute(fetchCatalogUseCase,null)
                 .subscribe(
                         productItemList -> {
                             getView().hideLoading();
                             getView().showCatalog((List<Product>) productItemList);
+                            EspressoIdlingResource.decrement();
                         },
                         throwable -> {
                             getView().hideLoading();
                             getView().showError(throwable.toString());
+                            EspressoIdlingResource.decrement();
                         }
                 );
     }
@@ -62,7 +67,7 @@ public class CatalogPresenter extends BasePresenter<CatalogContract.View>
     }
 
     @Override
-    public int getBasketSize() {
+    public int getShoppingCartSize() {
         return shoppingCartManager.getTotalItensCount();
     }
 }

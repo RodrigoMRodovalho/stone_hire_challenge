@@ -26,14 +26,11 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    compile project(path: ':data')
 
     compile rootProject.ext.commonDependencies.javaxannotation
     compile rootProject.ext.commonDependencies.dagger
     annotationProcessor rootProject.ext.commonDependencies.daggercompiler
-    compile project(path: ':data')
     compile rootProject.ext.presentationDependencies.appcompat
     compile rootProject.ext.presentationDependencies.design
     compile rootProject.ext.presentationDependencies.recyclerview
@@ -46,10 +43,32 @@ dependencies {
     compile rootProject.ext.presentationDependencies.scrollablenumberpicker
     compile rootProject.ext.presentationDependencies.maskededittext
     compile rootProject.ext.presentationDependencies.loadingbuttonandroid
+    compile rootProject.ext.presentationDependencies.espressoidlingresource
 
     testCompile rootProject.ext.commonTestDependencies.junit
     testCompile rootProject.ext.commonTestDependencies.mockito
     testCompile rootProject.ext.commonTestDependencies.hamcrest
     testCompile rootProject.ext.commonTestDependencies.powermock
     testCompile rootProject.ext.commonTestDependencies.powermockmockito
+
+    androidTestCompile (rootProject.ext.presentationTestDependencies.espressocore,{
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestCompile (rootProject.ext.presentationTestDependencies.espressocontrib,{
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+        exclude module: 'support-v13'
+        exclude module: 'recyclerview-v7'
+        exclude module: 'appcompat-v7'
+        exclude module: 'design'
+    })
+    androidTestCompile (rootProject.ext.presentationTestDependencies.espressointents,{
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    androidTestCompile (rootProject.ext.presentationTestDependencies.mockwebserver,{
+       exclude group: 'com.squareup.okio', module: 'okio'
+       exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+    })
+
 }
